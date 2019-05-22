@@ -3,14 +3,15 @@
 </p>
 
 <div align="center">
-  <h1>Wexond</h1>
+  <h1>Arweave Browser</h1>
 
 [![Travis](https://img.shields.io/travis/com/wexond/wexond.svg?style=flat-square)](https://travis-ci.com/wexond/wexond)
 [![AppVeyor](https://img.shields.io/appveyor/ci/sentialx/wexond.svg?style=flat-square)](https://ci.appveyor.com/project/sentialx/wexond)
 [![Discord](https://img.shields.io/discord/307605794680209409.svg?style=flat-square)](https://discord.gg/6dU6hC)
 [![Downloads](https://img.shields.io/github/downloads/wexond/wexond/total.svg?style=flat-square)](https://github.com/wexond/wexond/releases)
 
-Wexond is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
+Arweave Browser is an extensible and privacy-focused web browser based on Wexond with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
+The main idea of this browser is to easily navigate the permaweb, faster, more secure and with extra features.
 
 </div>
 
@@ -23,20 +24,6 @@ Wexond is an extensible and privacy-focused web browser with a totally different
 - **Overlay** - It contains everything you will need. Search box, bookmarks, menu, your custom components and much more!
 - **Packages** - Extend Wexond for your needs, by installing or developing your own packages. They can theme the browser and even add custom components to the Overlay! ([#147](https://github.com/wexond/wexond/issues/147))
 - **Organize apps in tabs** - Wexond's tabs system can also contain your native apps like in [Multrin](https://github.com/sentialx/multrin)! (currently only for Windows)
-
-### Sponsors
-
-[![Sponsors](https://opencollective.com/wexond/tiers/sponsor.svg?avatarHeight=48)](https://opencollective.com/wexond)
-
-### Backers
-
-[![Backers](https://opencollective.com/wexond/tiers/backer.svg?avatarHeight=48)](https://opencollective.com/wexond)
-
-<a href="https://www.patreon.com/bePatron?u=12270966">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
-<a href="https://digital-presence.agency/"><img src="https://i.imgur.com/iNY6XA4.jpg" width="256"></a>
 
 # Screenshots
 
@@ -54,13 +41,7 @@ If you have found any bugs or just want to see some new features in Wexond, feel
 
 ## Running
 
-Before running Wexond, please ensure you have [`Node.js`](https://nodejs.org/en/) installed on your machine.
-
-When running on Windows, make sure you have build tools installed. You can install them by running as **administrator**:
-
-```bash
-$ npm i -g windows-build-tools
-```
+Before running Arweave Browser, please ensure you have [`Node.js`](https://nodejs.org/en/) installed on your machine.
 
 Firstly, run this command to install all needed dependencies. If you have encountered any problems, please report it. I will try to help as much as I can.
 
