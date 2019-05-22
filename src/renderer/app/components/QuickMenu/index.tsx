@@ -95,7 +95,7 @@ export const QuickMenu = observer(() => {
         >
           Bookmarks
         </Bubble>
-        <Bubble disabled invert={invert} icon={icons.download}>
+        {/*<Bubble disabled invert={invert} icon={icons.download}>
           Downloads
         </Bubble>
         <Bubble invert={invert} icon={icons.settings}>
@@ -103,7 +103,7 @@ export const QuickMenu = observer(() => {
         </Bubble>
         <Bubble disabled invert={invert} icon={icons.extensions}>
           Extensions
-        </Bubble>
+        </Bubble>*/}
         <Bubble
           disabled={!store.tabs.selectedTab}
           invert={invert}
@@ -114,7 +114,7 @@ export const QuickMenu = observer(() => {
         </Bubble>
       </Actions>
 
-      <Actions>
+      {/*<Actions>
         <Bubble disabled invert={invert} icon={icons.window}>
           New window
         </Bubble>
@@ -124,7 +124,7 @@ export const QuickMenu = observer(() => {
         <Bubble disabled invert={invert} icon={icons.window}>
           Tor
         </Bubble>
-      </Actions>
+      </Actions>*/}
     </Section>
   );
 });

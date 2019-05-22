@@ -60,8 +60,8 @@ export const Overlay = observer(() => {
             <TabGroups />
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
-            <Title>World</Title>
-            <WeatherCard />
+            {/*<Title>World</Title>
+            <WeatherCard />*/}
           </Content>
         </Scrollable>
       </Container>
