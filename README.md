@@ -1,41 +1,31 @@
 <p align="center">
-  <a href="https://wexond.net"><img src="static/app-icons/icon.png" width="256"></a>
+  <a href="https://arweave.org"><img src="static/app-icons/icon.png" width="256"></a>
 </p>
 
 <div align="center">
   <h1>Arweave Browser</h1>
 
-[![Travis](https://img.shields.io/travis/com/wexond/wexond.svg?style=flat-square)](https://travis-ci.com/wexond/wexond)
-[![AppVeyor](https://img.shields.io/appveyor/ci/sentialx/wexond.svg?style=flat-square)](https://ci.appveyor.com/project/sentialx/wexond)
-[![Discord](https://img.shields.io/discord/307605794680209409.svg?style=flat-square)](https://discord.gg/6dU6hC)
-[![Downloads](https://img.shields.io/github/downloads/wexond/wexond/total.svg?style=flat-square)](https://github.com/wexond/wexond/releases)
-
-Arweave Browser is an extensible and privacy-focused web browser based on Wexond with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
-The main idea of this browser is to easily navigate the permaweb, faster, more secure and with extra features.
+Arweave Browser is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
+The main idea of the browser is to easily navigate the permaweb, faster, more secure and with extra features.
 
 </div>
 
 # Features
 
-- **Wexond Shield** - Browse the web without any ads and don't let websites to track you. Thanks to the Wexond Shield, websites can load even 2 times faster!
-- **Beautiful and minimalistic UI** - The address bar is hidden in Overlay to take less space, but it doesn't impact on usability in any way. It's even better! [Give it a shot](https://wexond.net)
+- **Arweave Shield** - Browse the web without any ads and don't let websites to track you. Thanks to the Arweave Shield, websites can load even 2 times faster!
+- **Beautiful and minimalistic UI** - The address bar is hidden in Overlay to take less space, but it doesn't impact on usability in any way. It's even better!
 - **Tab groups** - Easily group tabs to groups and access them really fast.
-- **Partial support for Chrome extensions** - Install some extensions from Chrome Web Store (see [#110](https://github.com/wexond/wexond/issues/110))
+- **Partial support for Chrome extensions** - Install some extensions from Chrome Web Store
 - **Overlay** - It contains everything you will need. Search box, bookmarks, menu, your custom components and much more!
-- **Packages** - Extend Wexond for your needs, by installing or developing your own packages. They can theme the browser and even add custom components to the Overlay! ([#147](https://github.com/wexond/wexond/issues/147))
-- **Organize apps in tabs** - Wexond's tabs system can also contain your native apps like in [Multrin](https://github.com/sentialx/multrin)! (currently only for Windows)
+- **Packages** - Extend the Arweave Browser for your needs, by installing or developing your own packages. They can theme the browser and even add custom components to the Overlay!
 
 # Screenshots
 
 ![](https://wexond.net/img/screen.png)
 
-# [Roadmap](https://github.com/wexond/wexond/projects)
-
-# [Supported Chrome APIs](https://github.com/wexond/wexond/issues/110)
-
 # Contributing
 
-If you have found any bugs or just want to see some new features in Wexond, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Wexond is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
+If you have found any bugs or just want to see some new features in Arweave Brpwser, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Arweave Brpwser is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
 
 ## Running
 
@@ -47,7 +37,7 @@ Firstly, run this command to install all needed dependencies. If you have encoun
 $ npm install
 ```
 
-The given command below will run Wexond in the development mode.
+The given command below will run Arweave Brpwser in the development mode.
 
 ```bash
 $ npm run dev
@@ -67,18 +57,15 @@ $ npm run <command>
 
 | Command          | Description                                 |
 | ---------------- | ------------------------------------------- |
-| `build`          | Bundles Wexond's source in production mode. |
-| `compile-win32`  | Compiles Wexond binaries for Windows.       |
-| `compile-darwin` | Compiles Wexond binaries for macOS.         |
-| `compile-linux`  | Compiles Wexond binaries for Linux.         |
+| `build`          | Bundles Arweave Brpwser's source in production mode. |
+| `compile-win32`  | Compiles Arweave Brpwser binaries for Windows.       |
+| `compile-darwin` | Compiles Arweave Brpwser binaries for macOS.         |
+| `compile-linux`  | Compiles Arweave Brpwser binaries for Linux.         |
 | `lint`           | Lints code.                                 |
 | `lint-fix`       | Fixes eslint errors if any                  |
-| `start`          | Starts Wexond.                              |
-| `dev`            | Starts Wexond in the development mode       |
+| `start`          | Starts Arweave Brpwser.                              |
+| `dev`            | Starts Arweave Brpwser in the development mode       |
 
 # Documentation
 
-> At this moment there are no docs, however this may change in the future, see ([#147](https://github.com/wexond/wexond/issues/147)).
-
-Guides and the API reference are located in [`docs`](docs).
-It also contains documents describing how to use the browser, and create themes.
+> At this moment there are no docs, however this may change in the future.
