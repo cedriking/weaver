@@ -1,16 +1,16 @@
 !macro customInstall
-  WriteRegStr SHCTX "SOFTWARE\RegisteredApplications" "Wexond" "Software\Clients\StartMenuInternet\Wexond\Capabilities"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond\Capabilities\StartMenu" "StartMenuInternet" "Wexond"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond" "" "Wexond"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond\Capabilities" "ApplicationDescription" "A privacy-focused, extensible and beautiful web browser"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond\Capabilities" "ApplicationName" "Wexond"
-  WriteRegDWORD SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond\InstallInfo" "IconsVisible" 1
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond\shell\open\command" "" "$0\Wexond.exe"
-  WriteRegStr HKCU "SOFTWARE\Classes\BraveBetaHTML\shell\open\command" "" '"$0\Wexond.exe" -- "%1"'
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\BraveBeta\Capabilities\URLAssociations" "http" "Wexond"
+  WriteRegStr SHCTX "SOFTWARE\RegisteredApplications" "Arweave" "Software\Clients\StartMenuInternet\Arweave\Capabilities"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities\StartMenu" "StartMenuInternet" "Arweave"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave" "" "Arweave"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities" "ApplicationDescription" "A privacy-focused, extensible and beautiful web browser"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities" "ApplicationName" "Arweave"
+  WriteRegDWORD SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\InstallInfo" "IconsVisible" 1
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\shell\open\command" "" "$0\Arweave.exe"
+  WriteRegStr HKCU "SOFTWARE\Classes\BraveBetaHTML\shell\open\command" "" '"$0\Arweave.exe" -- "%1"'
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\BraveBeta\Capabilities\URLAssociations" "http" "Arweave"
 !macroend
 !macro customUnInstall
-  DeleteRegKey HKCU "SOFTWARE\Classes\Wexond"
-  DeleteRegKey SHCTX "SOFTWARE\Clients\StartMenuInternet\Wexond"
-  DeleteRegValue SHCTX "SOFTWARE\RegisteredApplications" "Wexond"
+  DeleteRegKey HKCU "SOFTWARE\Classes\Arweave"
+  DeleteRegKey SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave"
+  DeleteRegValue SHCTX "SOFTWARE\RegisteredApplications" "Arweave"
 !macroend
