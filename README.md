@@ -29,8 +29,6 @@ The main idea of this browser is to easily navigate the permaweb, faster, more s
 
 ![](https://wexond.net/img/screen.png)
 
-![](https://wexond.net/img/screen2.gif)
-
 # [Roadmap](https://github.com/wexond/wexond/projects)
 
 # [Supported Chrome APIs](https://github.com/wexond/wexond/issues/110)
