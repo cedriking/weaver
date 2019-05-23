@@ -1,37 +1,27 @@
 {
-  "name": "wexond",
-  "version": "2.1.0",
-  "description": "Extensible, fast and innovative web browser with material UI.",
+  "name": "arweave-browser",
+  "version": "1.0.0",
+  "description": "Extensible, fast and innovative web browser with material UI. Based on Wexond v2.1.0",
   "keywords": [
     "web-browser",
     "material",
     "electron",
-    "react",
-    "mobx",
-    "styled-components"
+    "styled-components",
+    "arweave-browser",
+    "arweave"
   ],
-  "homepage": "https://github.com/wexond/wexond#readme",
+  "homepage": "https://github.com/GoldZeus/arweave-browser/#readme",
   "main": "build/main.js",
   "author": {
-    "name": "Eryk Rakowski",
-    "email": "sentialx@gmail.com"
+    "name": "GoldZeus",
+    "email": "zeus.github@tryninja.io"
   },
-  "contributors": [
-    {
-      "name": "Eryk Rakowski",
-      "email": "sentialx@gmail.com"
-    },
-    {
-      "name": "Mikołaj Palkiewicz",
-      "email": "xnerhu@gmail.com"
-    }
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wexond/wexond.git"
+    "url": "git+https://github.com/GoldZeus/arweave-browser.git"
   },
   "bugs": {
-    "url": "https://github.com/wexond/wexond/issues"
+    "url": "https://github.com/GoldZeus/arweave-browser/issues"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV='dev' node fuse.js",
