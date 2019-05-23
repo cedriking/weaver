@@ -1,6 +1,6 @@
 {
-  "appId": "org.wexond.wexond",
-  "productName": "Wexond",
+  "appId": "org.arweave.browser",
+  "productName": "Arweave Browser",
 
   "nsis": {
     "include": "static/installer.nsh"
@@ -31,7 +31,7 @@
   "fileAssociations": [
     {
       "name": "Document",
-      "description": "Wexond",
+      "description": "Arweave Browser",
       "role": "Viewer",
       "ext": "html"
     }
