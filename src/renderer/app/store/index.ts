@@ -43,6 +43,9 @@ export class Store {
   public isHTMLFullscreen = false;
 
   @observable
+  public currentBlock = 0;
+
+  @observable
   public updateInfo = {
     available: false,
     version: '',
@@ -104,6 +107,13 @@ export class Store {
           this.tabs.list.map(tab => tab.getApiTab()),
         );
       },
+    );
+
+    ipcRenderer.on(
+        'current-block-change',
+        (e: IpcMessageEvent, block: number) => {
+          this.currentBlock = block;
+        },
     );
 
     ipcRenderer.on(

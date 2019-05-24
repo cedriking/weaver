@@ -26,6 +26,9 @@ import trash from '~/shared/resources/icons/delete.svg';
 import up from '~/shared/resources/icons/up.svg';
 import shield from '~/shared/resources/icons/shield.svg';
 import night from '~/shared/resources/icons/night.svg';
+import done from '~/shared/resources/icons/done.svg';
+import doneAll from '~/shared/resources/icons/done-all.svg';
+import wallet from '~/shared/resources/icons/wallet.svg';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -59,4 +62,7 @@ export const icons = {
   up,
   shield,
   night,
+  done,
+  doneAll,
+  wallet,
 };

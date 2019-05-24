@@ -24,6 +24,10 @@ const onFindClick = () => {
   }, 200);
 };
 
+const showBlockStatus = () => {
+  console.log('hovered showBlockStatus');
+};
+
 const onDarkClick = () => {
   store.settings.isDarkTheme = !store.settings.isDarkTheme;
   store.theme = store.settings.isDarkTheme ? darkTheme : lightTheme;
@@ -111,6 +115,13 @@ export const QuickMenu = observer(() => {
           onClick={onFindClick}
         >
           Find
+        </Bubble>
+        <Bubble
+          invert={invert}
+          icon={icons.done}
+          onMouseOver={showBlockStatus}
+        >
+          {store.currentBlock}
         </Bubble>
       </Actions>
 

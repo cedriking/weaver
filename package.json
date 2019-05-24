@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "@cliqz/adblocker": "0.9.1",
+    "arweave": "^1.4.0",
     "axios": "0.18.0",
     "electron-extensions": "1.0.0",
     "electron-log": "3.0.5",
