@@ -1,12 +1,9 @@
-import * as Arweave from 'arweave/node';
-
 import * as Datastore from 'nedb';
 import { observable, computed, action } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import { countVisitedTimes, compareDates, getSectionLabel } from '../utils';
 import { ArweaveappItem } from '../models/arweaveapp-item';
-
-const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
+import { arweave } from '~/renderer/app/components/App';
 
 export class ArweaveAppsStore {
   public db = new Datastore({
