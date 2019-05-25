@@ -116,6 +116,13 @@ export const QuickMenu = observer(() => {
         >
           Find
         </Bubble>
+        <Bubble
+            disabled
+            invert={invert}
+            icon={icons.done}
+        >
+          {store.currentBlock}
+        </Bubble>
       </Actions>
 
       {/*<Actions>
@@ -129,16 +136,6 @@ export const QuickMenu = observer(() => {
           Tor
         </Bubble>
       </Actions>*/}
-
-      <Actions>
-        <Bubble
-            disabled
-            invert={invert}
-            icon={icons.done}
-        >
-          {store.currentBlock}
-        </Bubble>
-      </Actions>
     </Section>
   );
 });

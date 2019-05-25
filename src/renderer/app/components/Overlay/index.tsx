@@ -14,7 +14,6 @@ import {
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
-import { WalletGroups } from '../WalletGroups';
 import { WeatherCard } from '../WeatherCard';
 import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
@@ -57,15 +56,11 @@ export const Overlay = observer(() => {
             <SearchBox />
             <Dial />
 
-            {/*<Title>Overview</Title>
-            <TabGroups />*/}
-            <Title>Wallets</Title>
-            <WalletGroups />
+            <Title>Overview</Title>
+            <TabGroups />
 
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
-            {/*<Title>World</Title>
-            <WeatherCard />*/}
           </Content>
         </Scrollable>
       </Container>

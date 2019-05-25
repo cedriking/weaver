@@ -6,8 +6,9 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { DropArrow, Title } from '../Overlay/style';
 import { BookmarksDial } from '../BookmarksDial';
 import { TopSites } from '../TopSites';
+import { ArweaveApps } from '../ArweaveApps';
 
-const changeDialType = (type: 'top-sites' | 'bookmarks') => () => {
+const changeDialType = (type: 'top-sites' | 'bookmarks' | 'arweave-apps') => () => {
   store.settings.dialType = type;
   store.saveSettings();
 };
@@ -29,12 +30,19 @@ export const Dial = observer(() => {
             onClick={onDialTitleClick}
             style={{ marginBottom: 24, cursor: 'pointer' }}
           >
-            {dialType === 'bookmarks' ? 'Bookmarks' : 'Top Sites'}
+            {dialType === 'bookmarks' ? 'Bookmarks' : (dialType === 'top-sites' ? 'Top Sites' : 'Arweave Apps')}
             <DropArrow />
             <ContextMenu
               style={{ top: 42 }}
               visible={store.overlay.dialTypeMenuVisible}
             >
+              <ContextMenuItem
+                icon={icons.fire}
+                selected={dialType === 'arweave-apps'}
+                onClick={changeDialType('arweave-apps')}
+              >
+                Arweave Apps
+              </ContextMenuItem>
               <ContextMenuItem
                 icon={icons.fire}
                 selected={dialType === 'top-sites'}
@@ -51,7 +59,7 @@ export const Dial = observer(() => {
               </ContextMenuItem>
             </ContextMenu>
           </Title>
-          {dialType === 'bookmarks' ? <BookmarksDial /> : <TopSites />}
+          {dialType === 'bookmarks' ? <BookmarksDial /> : (dialType === 'top-sites' ? <TopSites /> : <ArweaveApps />)}
         </>
       )}
     </>
