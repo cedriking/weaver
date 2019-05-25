@@ -61,7 +61,7 @@ export class Store {
 
   @observable
   public settings: Settings = {
-    dialType: 'arweave-apps',
+    dialType: 'top-sites',
     isDarkTheme: false,
     isShieldToggled: true,
   };

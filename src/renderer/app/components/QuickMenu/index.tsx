@@ -10,7 +10,7 @@ import { darkTheme, lightTheme } from '~/renderer/constants/themes';
 import { getCurrentWindow } from '../../utils';
 import { ipcRenderer } from 'electron';
 
-const changeContent = (content: 'history' | 'default' | 'bookmarks') => () => {
+const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'arweaveapps') => () => {
   store.overlay.currentContent = content;
 };
 
@@ -86,6 +86,13 @@ export const QuickMenu = observer(() => {
       <Line />
       <Actions>
         <Bubble
+            onClick={changeContent('arweaveapps')}
+            invert={invert}
+            icon={icons.fire}
+        >
+          Apps
+        </Bubble>
+        <Bubble
           onClick={changeContent('history')}
           invert={invert}
           icon={icons.history}
@@ -116,15 +123,14 @@ export const QuickMenu = observer(() => {
         >
           Find
         </Bubble>
-        <Bubble
+        {/*<Bubble
             disabled
             invert={invert}
             icon={icons.done}
         >
           {store.currentBlock}
-        </Bubble>
+        </Bubble>*/}
       </Actions>
-
       {/*<Actions>
         <Bubble disabled invert={invert} icon={icons.window}>
           New window

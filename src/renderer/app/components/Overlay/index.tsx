@@ -16,6 +16,7 @@ import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
 import { WeatherCard } from '../WeatherCard';
 import { History } from '../History';
+import { Apps } from '../Apps';
 import { Bookmarks } from '../Bookmarks';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
@@ -64,6 +65,7 @@ export const Overlay = observer(() => {
           </Content>
         </Scrollable>
       </Container>
+      <Apps />
       <History />
       <Bookmarks />
     </StyledOverlay>

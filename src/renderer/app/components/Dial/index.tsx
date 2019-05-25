@@ -24,7 +24,7 @@ export const Dial = observer(() => {
   return (
     <>
       {(store.history.topSites.length > 0 ||
-        store.bookmarks.list.length > 0) && (
+        store.bookmarks.list.length > 0 || store.arweaveApps.items.length > 0) && (
         <>
           <Title
             onClick={onDialTitleClick}
@@ -44,11 +44,11 @@ export const Dial = observer(() => {
                 Arweave Apps
               </ContextMenuItem>
               <ContextMenuItem
-                icon={icons.fire}
+                icon={icons.history}
                 selected={dialType === 'top-sites'}
                 onClick={changeDialType('top-sites')}
               >
-                Top Sites
+                Most Visited
               </ContextMenuItem>
               <ContextMenuItem
                 icon={icons.bookmarks}

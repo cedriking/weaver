@@ -10,15 +10,12 @@ import { WindowsButtons } from '../WindowsButtons';
 import { platform } from 'os';
 import { Overlay } from '../Overlay';
 import store from '../../store';
-import * as Arweave from 'arweave/node';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');
 };
-
-export const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 
 export const App = observer(() => {
   return (
