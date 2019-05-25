@@ -14,6 +14,8 @@ export class ArweaveAppsStore {
     autoload: true,
   });
 
+  private updateTime = 60000 * 30;
+
   @observable
   public items: ArweaveappItem[] = [];
 
@@ -59,25 +61,25 @@ export class ArweaveAppsStore {
   }
 
   public async load() {
-    this.clear();
+    let hasItems = false;
     await this.db.find({}).exec((err: any, items: ArweaveappItem[]) => {
       if (err) {
         return console.warn(err);
       }
 
-      items = items.sort(
-        (a: any, b: any) => a['unix-time'] - +b['unix-time'],
-      );
+      items.sort((a: any, b: any) => a.title > b.title ? 1 : a.title < b.title ? -1 : 0);
 
+      hasItems = (items.length > 0);
       this.items = items;
     });
 
-    if (!this.items.length) {
+    if (!hasItems) {
       await this.getArweaveApps();
     }
+
+    setTimeout(() => this.update(), this.updateTime);
   }
 
-  @observable
   public async getArweaveApps() {
     const queryLinks = {
       op: 'and',
@@ -93,11 +95,8 @@ export class ArweaveAppsStore {
       },
     };
 
-    console.log('fetching published apps...');
     const res = await arweave.api.post('arql', queryLinks);
-    console.log('finished fetching published apps.');
 
-    this.clear();
     let tmpItems: ArweaveappItem[] = [];
     if (res.data.length) {
       for (let i = 0, j = res.data.length; i < j; i++) {
@@ -145,6 +144,7 @@ export class ArweaveAppsStore {
       tmpItems = tmp;
     }
 
+    await this.clearAsync();
     for (let i = 0, j = tmpItems.length; i < j; i++) {
       this.addItem(tmpItems[i]);
     }
@@ -163,10 +163,20 @@ export class ArweaveAppsStore {
     });
   }
 
-  public clear() {
+  public clearAsync() {
+    return new Promise((resolve) => {
+      this.clear((e: any, num: any) => {
+        resolve();
+      });
+    });
+  }
+
+  public clear(cb = (e: any, n: any) => {}) {
     this.items = [];
 
-    this.db.remove({}, { multi: true }, (err, num) => {});
+    this.db.remove({}, { multi: true }, (err, num) => {
+      cb(err, num);
+    });
   }
 
   public removeItem(id: string) {
@@ -175,6 +185,11 @@ export class ArweaveAppsStore {
     this.db.remove({ _id: id }, err => {
       if (err) return console.warn(err);
     });
+  }
+
+  private async update() {
+    await this.getArweaveApps();
+    setTimeout(() => this.update(), this.updateTime);
   }
 
   @action

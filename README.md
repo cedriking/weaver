@@ -12,6 +12,7 @@ The main idea of the browser is to easily navigate the permaweb, faster, more se
 
 # Features
 
+- **ArweaveApps** - Arweave Apps are accessible directly from the intro screen.
 - **Arweave Shield** - Browse the web without any ads and don't let websites to track you. Thanks to the Arweave Shield, websites can load even 2 times faster!
 - **Beautiful and minimalistic UI** - The address bar is hidden in Overlay to take less space, but it doesn't impact on usability in any way. It's even better!
 - **Tab groups** - Easily group tabs to groups and access them really fast.
@@ -21,7 +22,7 @@ The main idea of the browser is to easily navigate the permaweb, faster, more se
 
 # Screenshots
 
-![](https://wexond.net/img/screen.png)
+![](static/screenshots/home.png)
 
 # Contributing
 
