@@ -67,6 +67,3 @@ $ npm run <command>
 | `start`          | Starts Arweave Browser.                              |
 | `dev`            | Starts Arweave Browser in the development mode       |
 
-# Documentation
-
-> At this moment there are no docs, however this may change in the future.
