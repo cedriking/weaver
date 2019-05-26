@@ -26,7 +26,7 @@ The main idea of the browser is to easily navigate the permaweb, faster, more se
 
 # Contributing
 
-If you have found any bugs or just want to see some new features in Arweave Brpwser, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Arweave Brpwser is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
+If you have found any bugs or just want to see some new features in Arweave Browser, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Arweave Browser is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
 
 ## Running
 
@@ -38,7 +38,7 @@ Firstly, run this command to install all needed dependencies. If you have encoun
 $ npm install
 ```
 
-The given command below will run Arweave Brpwser in the development mode.
+The given command below will run Arweave Browser in the development mode.
 
 ```bash
 $ npm run dev
@@ -58,14 +58,14 @@ $ npm run <command>
 
 | Command          | Description                                 |
 | ---------------- | ------------------------------------------- |
-| `build`          | Bundles Arweave Brpwser's source in production mode. |
-| `compile-win32`  | Compiles Arweave Brpwser binaries for Windows.       |
-| `compile-darwin` | Compiles Arweave Brpwser binaries for macOS.         |
-| `compile-linux`  | Compiles Arweave Brpwser binaries for Linux.         |
+| `build`          | Bundles Arweave Browser's source in production mode. |
+| `compile-win32`  | Compiles Arweave Browser binaries for Windows.       |
+| `compile-darwin` | Compiles Arweave Browser binaries for macOS.         |
+| `compile-linux`  | Compiles Arweave Browser binaries for Linux.         |
 | `lint`           | Lints code.                                 |
 | `lint-fix`       | Fixes eslint errors if any                  |
-| `start`          | Starts Arweave Brpwser.                              |
-| `dev`            | Starts Arweave Brpwser in the development mode       |
+| `start`          | Starts Arweave Browser.                              |
+| `dev`            | Starts Arweave Browser in the development mode       |
 
 # Documentation
 
