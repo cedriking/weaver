@@ -3,10 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import { ArweaveappItem } from '../models/arweaveapp-item';
 import { AppsSection } from '../models';
-// @ts-ignore
-import * as Arweave from 'arweave/node';
-
-export const arweaveNetwork = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
+import { arweaveNetwork } from '~/shared/constants';
 
 export const categories = [
   'games',

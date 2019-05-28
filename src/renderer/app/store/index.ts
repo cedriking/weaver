@@ -17,7 +17,8 @@ import { getPath } from '~/shared/utils/paths';
 import { Settings } from '../models/settings';
 import { DownloadsStore } from './downloads';
 import { lightTheme, darkTheme } from '~/renderer/constants/themes';
-import {ArweaveAppsStore} from '~/renderer/app/store/arweave-apps';
+import { ArweaveAppsStore } from './arweave-apps';
+import { ArweaveStore } from './arweave';
 
 export class Store {
   public history = new HistoryStore();
@@ -31,6 +32,7 @@ export class Store {
   public extensions = new ExtensionsStore();
   public downloads = new DownloadsStore();
   public arweaveApps = new ArweaveAppsStore();
+  public arweaveServer = new ArweaveStore();
 
   @observable
   public theme = lightTheme;

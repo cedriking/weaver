@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Section, Actions } from '../Overlay/style';
-import { preventHiding, Header } from '../Overlay';
+import { preventHiding } from '../Overlay';
 import { Bubble } from '../Bubble';
 import { icons } from '../../constants';
 import store from '../../store';
@@ -22,10 +22,6 @@ const onFindClick = () => {
   setTimeout(() => {
     store.tabs.selectedTab.findVisible = true;
   }, 200);
-};
-
-const showBlockStatus = () => {
-  console.log('hovered showBlockStatus');
 };
 
 const onDarkClick = () => {
@@ -123,13 +119,13 @@ export const QuickMenu = observer(() => {
         >
           Find
         </Bubble>
-        {/*<Bubble
+        <Bubble
             disabled
             invert={invert}
-            icon={icons.done}
+            icon={icons.widgets}
         >
-          {store.currentBlock}
-        </Bubble>*/}
+          {store.arweaveServer.height}
+        </Bubble>
       </Actions>
       {/*<Actions>
         <Bubble disabled invert={invert} icon={icons.window}>

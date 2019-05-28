@@ -1,6 +1,7 @@
 import { ipcMain, app, Menu, session } from 'electron';
 import { resolve, extname } from 'path';
 import { platform, homedir } from 'os';
+// @ts-ignore
 import { extensionsMain } from 'electron-extensions';
 
 import { AppWindow } from './app-window';
