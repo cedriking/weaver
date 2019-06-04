@@ -275,7 +275,7 @@ export class ArweaveServer {
 
         resolve(res.data);
       } catch (e) {
-        if (e.response.status >= 400) {
+        if (e.response && e.response.status && e.response.status >= 400) {
           return resolve(null);
         }
 
@@ -307,7 +307,7 @@ export class ArweaveServer {
 
         resolve(res.data);
       } catch (e) {
-        if (e.response.status >= 400) {
+        if (e.response && e.response.status && e.response.status >= 400) {
           return resolve(null);
         }
 
