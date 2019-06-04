@@ -127,18 +127,21 @@ export class ArweaveServer {
 
     // Data
     this.server.get('/:txid', async (req, res) => {
-      const transaction: IArweaveTransaction = await this.getTransaction(req.params.txid);
-      if (transaction) {
-        const html = Buffer.from(transaction.data, 'base64').toString('utf-8');
-        res.writeHead(200, {
-          'Content-Length': Buffer.byteLength(html),
-          'Content-Type': 'text/html',
-        });
-        res.write(html);
-        res.end();
-      } else {
-        res.send(404, 'Not Found.');
+      let transaction: IArweaveTransaction = await this.getTransaction(req.params.txid);
+      if (!transaction) {
+        transaction = await this.getPeerTx(req.params.txid);
+        if (!transaction) {
+          return res.send(404, 'Not Found.');
+        }
       }
+
+      const html = Buffer.from(transaction.data, 'base64').toString('utf-8');
+      res.writeHead(200, {
+        'Content-Length': Buffer.byteLength(html),
+        'Content-Type': 'text/html',
+      });
+      res.write(html);
+      res.end();
     });
 
     this.server.listen('1985');
@@ -272,7 +275,7 @@ export class ArweaveServer {
 
         resolve(res.data);
       } catch (e) {
-        if (e.response.data === 'Block not found.') {
+        if (e.response.status >= 400) {
           return resolve(null);
         }
 
@@ -304,7 +307,7 @@ export class ArweaveServer {
 
         resolve(res.data);
       } catch (e) {
-        if (e.response.data === 'Not Found.') {
+        if (e.response.status >= 400) {
           return resolve(null);
         }
 

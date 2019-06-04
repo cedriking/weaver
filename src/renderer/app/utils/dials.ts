@@ -6,14 +6,12 @@ export const onSiteClick = (url: string) => () => {
   if (!url.includes('://') && url.length >= 43) {
     if (!store.arweaveServer.peersReady) {
       url = `https://arweave.net/${url}`;
-    } else if (store.arweaveServer.isRunningLocally) {
-      url = `http://localhost:1985/${url}`;
     } else {
-      const activePeers = arweaveDB.getActivePeers();
-      const randIndex = Math.floor(Math.random() * activePeers.length);
-      url = `http://${activePeers[randIndex]}/${url}`;
+      url = `http://localhost:1985/${url}`;
     }
   }
+
+  console.log(url, uri);
 
   const tab = store.tabs.selectedTab;
 

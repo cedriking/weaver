@@ -53,6 +53,9 @@ export class OverlayStore {
   }
 
   public set searchBoxValue(val: string) {
+    if (val.startsWith('https://arweave.net') || val.startsWith('http://localhost:1985')) {
+      val = val.replace('https://arweave.net/', '').replace('http://localhost:1985/', '');
+    }
     this._searchBoxValue = val;
     this.inputRef.current.value = val;
   }
