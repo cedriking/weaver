@@ -7,6 +7,8 @@ import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
+import { arweaveDB } from '~/arweave';
+import { arweaveServerLocalLoad, arweaveServerPeersReady } from '~/main/services/arweave-server';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -22,6 +24,16 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
+    } else if (!text.includes('://') && text.length >= 43) {
+      if (!arweaveServerPeersReady) {
+        url = `https://arweave.net/${text}`;
+      } else if (arweaveServerLocalLoad) {
+        url = `http://localhost:1985/${text}`;
+      } else {
+        const activePeers = arweaveDB.getActivePeers();
+        const randIndex = Math.floor(Math.random() * activePeers.length);
+        url = `http://${activePeers[randIndex]}/${text}`;
+      }
     } else if (!text.includes('://')) {
       url = `https://www.google.com/search?q=${text}`;
     }

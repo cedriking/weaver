@@ -1,3 +1,3 @@
-import { ArweaveDB } from './arweaveDB';
+import { ArweaveServer } from './arweaveServer';
 
-export const arweaveDB = new ArweaveDB();
+export const arweaveDB = new ArweaveServer();

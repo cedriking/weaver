@@ -11,7 +11,7 @@ export const ArweaveApps = observer(() => {
       {store.arweaveApps.items.map(item => (
         <Bubble
           itemsPerRow={6}
-          onClick={onSiteClick(`https://arweave.net/${item.linkId}`)}
+          onClick={onSiteClick(`${item.linkId}`)}
           key={item.id}
           maxLines={1}
           iconSize={20}

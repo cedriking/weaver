@@ -120,9 +120,9 @@ export const QuickMenu = observer(() => {
           Find
         </Bubble>
         <Bubble
-            disabled
+            toggled={store.arweaveServer.peersReady}
             invert={invert}
-            icon={icons.widgets}
+            icon={store.arweaveServer.isRunningLocally ? icons.viewModule : icons.widgets}
         >
           {store.arweaveServer.height}
         </Bubble>

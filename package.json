@@ -63,7 +63,9 @@
   },
   "dependencies": {
     "@cliqz/adblocker": "0.9.1",
+    "@types/restify": "^7.2.11",
     "arweave": "^1.4.0",
+    "arweavedb": "^1.0.0",
     "axios": "0.18.0",
     "electron-extensions": "1.0.0",
     "electron-log": "3.0.5",
@@ -81,6 +83,7 @@
     "pretty-bytes": "5.2.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "restify": "^8.3.2",
     "styled-components": "4.2.0",
     "tldts": "4.0.6"
   }
