@@ -67,3 +67,21 @@ $ npm run <command>
 | `start`          | Starts Arweave Browser.                              |
 | `dev`            | Starts Arweave Browser in the development mode       |
 
+### Changelog
+```
+v1.0.2
+- Blockchain download for local/offline requests.
+- App links now appear without the path/IP on the search/url bar.
+- Local requests for arweave websites.
+- Better nodes error handling
+
+v1.0.1
+- Showing apps as list while clicking the apps button.
+- Changed the apps icon on about:blank.
+- Apps search directly in the browser.
+- Navigate to an arweave transaction with only it's ID.
+
+v1.0.0
+- Showing apps on about:blank.
+- Initial commit.
+```
