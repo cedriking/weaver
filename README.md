@@ -69,6 +69,14 @@ $ npm run <command>
 
 ### Changelog
 ```
+v1.0.3
+- You can add your wallets JSON files to the browser.
+- When a wallet is added, easily login by drag & drop for the wallet icon.
+- Set a master password to encrypt your browser wallet files.
+- CTRL + Click to set a new wallet as default (1st wallet is set by default).
+- Click on the wallet address to copy to clipboard. 
+- Arweave Browser is now "Weaver". New name!
+
 v1.0.2
 - Blockchain download for local/offline requests.
 - App links now appear without the path/IP on the search/url bar.
