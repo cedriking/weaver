@@ -7,6 +7,7 @@ import { Sections } from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
+import {icons} from '~/renderer/app/constants';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -104,7 +105,9 @@ export const Wallets = observer(() => {
           onDragOver={onDragOver}
           onDrop={onDrop}
         >
-          <MenuItem cat="">Drag and drop your JSON wallet here</MenuItem>
+          <NavigationDrawer.Item>Drag and drop your JSON wallet here</NavigationDrawer.Item>
+          <div style={{ flex: 1 }} />
+          <NavigationDrawer.Item>Always keep a copy of your wallets</NavigationDrawer.Item>
         </NavigationDrawer>
         <input type="password" value={store.wallets.walletPassword} onChange={setWalletPassword} style={{
           marginTop: 50,
