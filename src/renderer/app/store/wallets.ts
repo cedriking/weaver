@@ -8,6 +8,7 @@ import { bufferTob64Url, b64UrlToBuffer } from '../utils';
 import CryptoInterface from 'arweave/node/lib/crypto/crypto-interface';
 import NodeCryptoDriver from 'arweave/node/lib/crypto/node-driver';
 import * as crypto from 'crypto-js';
+import * as keytar from 'keytar';
 import store from '~/renderer/app/store/index';
 
 export class WalletsStore {
@@ -56,7 +57,7 @@ export class WalletsStore {
   }
 
   public async load() {
-    this.walletPassword = window.atob(window.atob(window.localStorage.getItem('arweaveWalletPassword') || ''));
+    this.walletPassword = await keytar.getPassword('weaver', 'weaverwallet') || '';
 
     this.db.find({}).exec((err: any, tmpItems: WalletItem[]) => {
       if (err) {
@@ -182,14 +183,14 @@ export class WalletsStore {
   }
 
   @action
-  public changePassword(val: string) {
+  public async changePassword(val: string) {
     const itemsData = this.items.map(i => {
       return this.decrypt(i);
     });
 
     this.walletPassword = val;
 
-    window.localStorage.setItem('arweaveWalletPassword', window.btoa(window.btoa(this.walletPassword)));
+    await keytar.setPassword('weaver', 'weaverwallet', this.walletPassword);
 
     for (let i = 0, j = itemsData.length; i < j; i++) {
       const item = this.items[i];

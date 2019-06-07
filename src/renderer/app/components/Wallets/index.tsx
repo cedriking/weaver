@@ -7,7 +7,6 @@ import { Sections } from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
-import {icons} from '~/renderer/app/constants';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
