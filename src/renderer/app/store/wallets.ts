@@ -8,6 +8,7 @@ import { bufferTob64Url, b64UrlToBuffer } from '../utils';
 import CryptoInterface from 'arweave/node/lib/crypto/crypto-interface';
 import NodeCryptoDriver from 'arweave/node/lib/crypto/node-driver';
 import * as crypto from 'crypto-js';
+import store from '~/renderer/app/store/index';
 
 export class WalletsStore {
   public db = new Datastore({
@@ -36,6 +37,10 @@ export class WalletsStore {
   public tmpPath: string = '';
 
   private appClosing = false;
+
+  // Clear the temp decrypted wallet
+  private to: any = null;
+  private tmpInterval = 10000; // 10 seconds
 
   constructor() {
     this.load();
@@ -150,6 +155,13 @@ export class WalletsStore {
     this.tmpPath = getPath(`wallets/${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}.json`);
 
     fs.writeFileSync(this.tmpPath, JSON.stringify(data), { encoding: 'utf8' });
+
+    clearInterval(this.to);
+    this.to = setInterval(() => {
+      store.wallets.tmpDelete();
+      clearInterval(this.to);
+      this.to = null;
+    }, this.tmpInterval);
 
     return this.tmpPath;
   }

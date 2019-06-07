@@ -15,20 +15,11 @@ const onUpdateClick = () => {
   ipcRenderer.send('update-install');
 };
 
-let to:any = null;
-
 const onWalletDrag = (e: any) => {
   e.preventDefault();
   // temp decrypted wallet
   const filePath = store.wallets.tmpDecrypt(store.wallets.defaultWallet);
   ipcRenderer.send('walletdrag', filePath);
-
-  clearInterval(to);
-  to = setInterval(() => {
-    store.wallets.tmpDelete();
-    clearInterval(to);
-    to = null;
-  }, 30000);
 };
 
 @observer
