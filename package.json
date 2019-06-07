@@ -1,7 +1,7 @@
 {
   "name": "weaver",
   "version": "1.0.3",
-  "description": "Weaver, your Arweave permaweb browser",
+  "description": "A permaweb-focused, private, extensible and beautiful web browser",
   "keywords": [
     "web-browser",
     "electron",
