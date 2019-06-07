@@ -82,6 +82,10 @@ const MenuItem = observer(
   ),
 );
 
+const setWalletPassword = (e: any) => {
+  store.wallets.changePassword(e.target.value);
+};
+
 export const Wallets = observer(() => {
   const { length } = store.wallets.selectedItems;
 
@@ -102,6 +106,12 @@ export const Wallets = observer(() => {
         >
           <MenuItem cat="">Drag and drop your JSON wallet here</MenuItem>
         </NavigationDrawer>
+        <input type="password" value={store.wallets.walletPassword} onChange={setWalletPassword} style={{
+          marginTop: 50,
+          width: '50%',
+          marginLeft: 300,
+          padding: 10,
+        }} />
         <WalletSections />
         <SelectionDialog
           visible={length > 0}

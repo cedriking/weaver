@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import * as Datastore from 'nedb';
 import { observable, action } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
@@ -6,6 +7,7 @@ import * as fs from 'fs';
 import { bufferTob64Url, b64UrlToBuffer } from '../utils';
 import CryptoInterface from 'arweave/node/lib/crypto/crypto-interface';
 import NodeCryptoDriver from 'arweave/node/lib/crypto/node-driver';
+import * as crypto from 'crypto-js';
 
 export class WalletsStore {
   public db = new Datastore({
@@ -28,8 +30,20 @@ export class WalletsStore {
   @observable
   public selectedItems: WalletItem[] = [];
 
+  @observable
+  public walletPassword: string = '';
+
+  public tmpPath: string = '';
+
+  private appClosing = false;
+
   constructor() {
     this.load();
+
+    ipcRenderer.on('app-closing', () => {
+      this.appClosing = true;
+      this.tmpDelete();
+    });
   }
 
   public resetLoadedItems() {
@@ -37,6 +51,8 @@ export class WalletsStore {
   }
 
   public async load() {
+    this.walletPassword = window.atob(window.atob(window.localStorage.getItem('arweaveWalletPassword') || ''));
+
     this.db.find({}).exec((err: any, tmpItems: WalletItem[]) => {
       if (err) {
         return console.warn(err);
@@ -51,22 +67,22 @@ export class WalletsStore {
 
   public async addFile(file: File) {
     const fileData:JWKInterface = JSON.parse(fs.readFileSync(file.path, { encoding: 'utf8' }));
-    console.log(fileData);
 
     const addy = await this.jwkToAddress(fileData);
     const filePath = getPath(`${this.walletsDir}/${addy}.json`);
-
-    if (!fs.existsSync(getPath(this.walletsDir))) {
-      fs.mkdirSync(getPath(this.walletsDir));
-    }
-
-    fs.writeFileSync(filePath, JSON.stringify(fileData), { encoding: 'utf8' });
 
     if (this.items.findIndex(i => i._id === addy) !== -1) {
       return true;
     }
 
     const item: WalletItem = { _id: addy, title: addy, balance: 0, filepath: filePath };
+
+    if (!fs.existsSync(getPath(this.walletsDir))) {
+      fs.mkdirSync(getPath(this.walletsDir));
+    }
+
+    this.saveEncrypt(item, JSON.stringify(fileData));
+
     if (!this.items.length) {
       item.default = true;
       this.defaultWallet = item;
@@ -110,8 +126,57 @@ export class WalletsStore {
     });
   }
 
+  public saveEncrypt(item: WalletItem, data: string) {
+    fs.writeFileSync(item.filepath, crypto.AES.encrypt(data, this.walletPassword).toString(), { encoding: 'utf8' });
+  }
+
+  public decrypt(item: WalletItem) {
+    const fileData: string = fs.readFileSync(item.filepath, { encoding: 'utf8' });
+    const decrypted = crypto.AES.decrypt(fileData, this.walletPassword);
+
+    return JSON.parse(decrypted.toString(crypto.enc.Utf8));
+  }
+
+  public saveDecrypt(item: WalletItem) {
+    const data = this.decrypt(item);
+
+    fs.writeFileSync(item.filepath, data, { encoding: 'utf8' });
+  }
+
+  public tmpDecrypt(item: WalletItem): string {
+    this.tmpDelete();
+
+    const data = this.decrypt(item);
+    this.tmpPath = getPath(`wallets/${Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)}.json`);
+
+    fs.writeFileSync(this.tmpPath, JSON.stringify(data), { encoding: 'utf8' });
+
+    return this.tmpPath;
+  }
+
+  public tmpDelete() {
+    if (this.tmpPath.length) {
+      fs.unlink(this.tmpPath, e => {
+        if (e) console.warn(e);
+      });
+      this.tmpPath = '';
+    }
+
+    if (this.appClosing) ipcRenderer.send('temp-wallet-deleted');
+  }
+
   public getDefaultLoaded() {
     return Math.floor(window.innerHeight / 56);
+  }
+
+  @action
+  public changePassword(val: string) {
+    this.walletPassword = val;
+
+    window.localStorage.setItem('arweaveWalletPassword', window.btoa(window.btoa(this.walletPassword)));
+    this.items.forEach(i => {
+      console.log(i.filepath);
+    });
   }
 
   @action

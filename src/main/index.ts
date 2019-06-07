@@ -99,6 +99,19 @@ app.on('ready', async () => {
 
   appWindow = new AppWindow();
 
+  let closeNow = false;
+  appWindow.on('close', e => {
+    if (!closeNow) {
+      e.preventDefault();
+      e.sender.send('app-closing');
+    }
+  });
+
+  ipcMain.on('temp-wallet-deleted', () => {
+    closeNow = true;
+    appWindow.close();
+  });
+
   const viewSession = session.fromPartition('persist:view');
 
   viewSession.on('will-download', (event, item, webContents) => {

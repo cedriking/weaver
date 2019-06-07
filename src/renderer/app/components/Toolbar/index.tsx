@@ -15,11 +15,20 @@ const onUpdateClick = () => {
   ipcRenderer.send('update-install');
 };
 
+let to:any = null;
+
 const onWalletDrag = (e: any) => {
   e.preventDefault();
-  console.log('Wallet dragged');
-  console.log(store.wallets.defaultWallet);
-  ipcRenderer.send('walletdrag', store.wallets.defaultWallet.filepath);
+  // temp decrypted wallet
+  const filePath = store.wallets.tmpDecrypt(store.wallets.defaultWallet);
+  ipcRenderer.send('walletdrag', filePath);
+
+  clearInterval(to);
+  to = setInterval(() => {
+    store.wallets.tmpDelete();
+    clearInterval(to);
+    to = null;
+  }, 30000);
 };
 
 @observer
@@ -69,13 +78,13 @@ export const Toolbar = observer(() => {
               size={18}
               style={{ marginLeft: 0 }}
               opacity={0.54}
-              onDragStart={onWalletDrag}
               data={{
                 badgeBackgroundColor: 'gray',
                 badgeText: '',
                 icon: icons.wallet,
                 badgeTextColor: 'white',
               }}
+              onDragStart={onWalletDrag}
             />
             <Separator />
           </>
