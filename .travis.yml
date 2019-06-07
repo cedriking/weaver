@@ -23,6 +23,7 @@ addons:
       - linux-libc-dev
       - icnsutils
       - graphicsmagick
+      - libsecret-1-0
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]] && [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run compile-darwin ;fi
