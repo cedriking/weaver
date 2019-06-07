@@ -69,7 +69,7 @@ export class WalletsStore {
     const fileData:JWKInterface = JSON.parse(fs.readFileSync(file.path, { encoding: 'utf8' }));
 
     const addy = await this.jwkToAddress(fileData);
-    const filePath = getPath(`${this.walletsDir}/${addy}.json`);
+    const filePath = getPath(`${this.walletsDir}/${addy}`);
 
     if (this.items.findIndex(i => i._id === addy) !== -1) {
       return true;
@@ -116,7 +116,7 @@ export class WalletsStore {
     this.db.remove({ _id : id }, err => {
       if (err) return console.warn(err);
 
-      fs.unlink(getPath(`${this.walletsDir}/${id}.json`), e => {
+      fs.unlink(getPath(`${this.walletsDir}/${id}`), e => {
         if (e) console.warn(e);
       });
 
@@ -130,7 +130,7 @@ export class WalletsStore {
     fs.writeFileSync(item.filepath, crypto.AES.encrypt(data, this.walletPassword).toString(), { encoding: 'utf8' });
   }
 
-  public decrypt(item: WalletItem) {
+  public decrypt(item: WalletItem): WalletItem {
     const fileData: string = fs.readFileSync(item.filepath, { encoding: 'utf8' });
     const decrypted = crypto.AES.decrypt(fileData, this.walletPassword);
 
@@ -171,12 +171,18 @@ export class WalletsStore {
 
   @action
   public changePassword(val: string) {
+    const itemsData = this.items.map(i => {
+      return this.decrypt(i);
+    });
+
     this.walletPassword = val;
 
     window.localStorage.setItem('arweaveWalletPassword', window.btoa(window.btoa(this.walletPassword)));
-    this.items.forEach(i => {
-      console.log(i.filepath);
-    });
+
+    for (let i = 0, j = itemsData.length; i < j; i++) {
+      const item = this.items[i];
+      this.saveEncrypt(item, JSON.stringify(itemsData[i]));
+    }
   }
 
   @action
