@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
+import { clipboard } from 'electron';
 
 import store from '../../store';
 import { WalletItem } from '../../models';
@@ -27,8 +28,8 @@ export default observer(({ data }: { data: WalletItem }) => {
 
   return (
     <ListItem key={data._id} onClick={onClick(data)} selected={selected}>
-      <Title>{data.title}</Title>
-      <Site>{data.balance}</Site>
+      <Title onClick={() => clipboard.writeText(data.title)}>{data.title}</Title>
+      {/*<Site>{data.balance}</Site>*/}
       <Remove onClick={onRemoveClick(data)} />
     </ListItem>
   );
