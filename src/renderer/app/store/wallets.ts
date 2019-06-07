@@ -29,7 +29,7 @@ export class WalletsStore {
   public itemsLoaded = this.getDefaultLoaded();
 
   @observable
-  public selectedItems: WalletItem[] = [];
+  public selectedItems: string[] = [];
 
   @observable
   public walletPassword: string = '';
@@ -64,7 +64,7 @@ export class WalletsStore {
       }
 
       this.items = tmpItems;
-      const items = JSON.parse(JSON.stringify(this.items.filter(i => i.default)));
+      const items = JSON.parse(JSON.stringify(this.items.filter(i => i.isDefault)));
 
       this.defaultWallet = items[0];
     });
@@ -89,11 +89,11 @@ export class WalletsStore {
     this.saveEncrypt(item, JSON.stringify(fileData));
 
     if (!this.items.length) {
-      item.default = true;
+      item.isDefault = true;
       this.defaultWallet = item;
 
     } else {
-      item.default = false;
+      item.isDefault = false;
     }
 
     await this.addItem([item]);
@@ -200,7 +200,7 @@ export class WalletsStore {
   @action
   public deleteSelected() {
     for (const item of this.selectedItems) {
-      this.removeItem(item._id);
+      this.removeItem(item);
     }
 
     this.selectedItems = [];
@@ -221,14 +221,22 @@ export class WalletsStore {
     );
   }
 
-  private setDefaultWallet(item: WalletItem) {
-    this.items.forEach(i => item.default = item._id === i._id);
+  private setDefaultWallet(itemId: string) {
+    const index = this.items.findIndex(i => i._id === itemId);
+    if (index === -1) return;
 
-    const items = this.items;
+    const item = this.items[index];
+
+    const tmpItems = this.items;
+    for (let i = 0, j = tmpItems.length; i < j; i++) {
+      console.log(item, tmpItems[i]);
+      tmpItems[i].isDefault = (tmpItems[i]._id === item._id)
+    }
+
     this.db.remove({}, async (e) => {
       if (e) return console.warn(e);
 
-      await this.addItem(items);
+      await this.addItem(tmpItems);
     });
 
     this.defaultWallet = item;
