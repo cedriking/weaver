@@ -3,7 +3,7 @@
 </p>
 
 <div align="center">
-  <h1>Weaver Browser</h1>
+  <h1>Weaver</h1>
 
 Weaver is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
 The main idea of the browser is to easily navigate the permaweb, faster, more secure and with extra features.
