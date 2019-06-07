@@ -11,8 +11,6 @@ export const onSiteClick = (url: string) => () => {
     }
   }
 
-  console.log(url, uri);
-
   const tab = store.tabs.selectedTab;
 
   if (!tab || store.overlay.isNewTab) {
