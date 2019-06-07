@@ -1,13 +1,13 @@
 {
-  "name": "arweave-browser",
+  "name": "weaver",
   "version": "1.0.2",
   "description": "Extensible, fast and innovative web browser with material UI. Based on Wexond v2.1.0",
   "keywords": [
     "web-browser",
-    "material",
     "electron",
-    "styled-components",
     "arweave-browser",
+    "weaver",
+    "weaver-browser",
     "arweave"
   ],
   "homepage": "https://github.com/GoldZeus/arweave-browser/#readme",

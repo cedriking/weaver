@@ -1,6 +1,6 @@
 {
-  "appId": "org.arweave.browser",
-  "productName": "Arweave Browser",
+  "appId": "org.weaver.browser",
+  "productName": "Weaver",
 
   "nsis": {
     "include": "static/installer.nsh"
@@ -31,7 +31,7 @@
   "fileAssociations": [
     {
       "name": "Document",
-      "description": "Arweave Browser",
+      "description": "Weaver",
       "role": "Viewer",
       "ext": "html"
     }

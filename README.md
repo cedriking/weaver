@@ -3,9 +3,9 @@
 </p>
 
 <div align="center">
-  <h1>Arweave Browser</h1>
+  <h1>Weaver Browser</h1>
 
-Arweave Browser is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
+Weaver is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
 The main idea of the browser is to easily navigate the permaweb, faster, more secure and with extra features.
 
 </div>
@@ -18,7 +18,7 @@ The main idea of the browser is to easily navigate the permaweb, faster, more se
 - **Tab groups** - Easily group tabs to groups and access them really fast.
 - **Partial support for Chrome extensions** - Install some extensions from Chrome Web Store
 - **Overlay** - It contains everything you will need. Search box, bookmarks, menu, your custom components and much more!
-- **Packages** - Extend the Arweave Browser for your needs, by installing or developing your own packages. They can theme the browser and even add custom components to the Overlay!
+- **Packages** - Extend Weaver for your needs, by installing or developing your own packages. They can theme the browser and even add custom components to the Overlay!
 
 # Screenshots
 
@@ -26,11 +26,11 @@ The main idea of the browser is to easily navigate the permaweb, faster, more se
 
 # Contributing
 
-If you have found any bugs or just want to see some new features in Arweave Browser, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Arweave Browser is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
+If you have found any bugs or just want to see some new features in Weaver, feel free to open an issue. I'm open to any suggestions and bug reports would be really helpful for me and appreciated very much. Weaver Browser is in heavy development and some bugs may occur. Also, please don't hesitate to open a pull request. This is really important to me and for the further development of this project.
 
 ## Running
 
-Before running Arweave Browser, please ensure you have [`Node.js`](https://nodejs.org/en/) installed on your machine.
+Before running Weaver, please ensure you have [`Node.js`](https://nodejs.org/en/) installed on your machine.
 
 Firstly, run this command to install all needed dependencies. If you have encountered any problems, please report it. I will try to help as much as I can.
 
@@ -38,7 +38,7 @@ Firstly, run this command to install all needed dependencies. If you have encoun
 $ npm install
 ```
 
-The given command below will run Arweave Browser in the development mode.
+The given command below will run Weaver in the development mode.
 
 ```bash
 $ npm run dev
@@ -58,14 +58,14 @@ $ npm run <command>
 
 | Command          | Description                                 |
 | ---------------- | ------------------------------------------- |
-| `build`          | Bundles Arweave Browser's source in production mode. |
-| `compile-win32`  | Compiles Arweave Browser binaries for Windows.       |
-| `compile-darwin` | Compiles Arweave Browser binaries for macOS.         |
-| `compile-linux`  | Compiles Arweave Browser binaries for Linux.         |
+| `build`          | Bundles Weaver's source in production mode. |
+| `compile-win32`  | Compiles Weaver binaries for Windows.       |
+| `compile-darwin` | Compiles Weaver binaries for macOS.         |
+| `compile-linux`  | Compiles Weaver binaries for Linux.         |
 | `lint`           | Lints code.                                 |
 | `lint-fix`       | Fixes eslint errors if any                  |
-| `start`          | Starts Arweave Browser.                              |
-| `dev`            | Starts Arweave Browser in the development mode       |
+| `start`          | Starts Weaver.                              |
+| `dev`            | Starts Weaver in the development mode       |
 
 ### Changelog
 ```
