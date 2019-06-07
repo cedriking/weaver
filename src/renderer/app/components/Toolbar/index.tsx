@@ -18,7 +18,8 @@ const onUpdateClick = () => {
 const onWalletDrag = (e: any) => {
   e.preventDefault();
   console.log('Wallet dragged');
-  ipcRenderer.send('walletdrag', 'C:/Users/cedri_tn22u5y/Documents/arweave-keyfile.json');
+  console.log(store.wallets.defaultWallet);
+  ipcRenderer.send('walletdrag', store.wallets.defaultWallet.filepath);
 };
 
 @observer
@@ -62,21 +63,23 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
-        {!isWindow && (
-          <BrowserAction
-            size={18}
-            style={{ marginLeft: 0 }}
-            opacity={0.54}
-            onDragStart={onWalletDrag}
-            data={{
-              badgeBackgroundColor: 'gray',
-              badgeText: '',
-              icon: icons.wallet,
-              badgeTextColor: 'white',
-            }}
-          />
+        {!isWindow && store.wallets.defaultWallet && (
+          <>
+            <BrowserAction
+              size={18}
+              style={{ marginLeft: 0 }}
+              opacity={0.54}
+              onDragStart={onWalletDrag}
+              data={{
+                badgeBackgroundColor: 'gray',
+                badgeText: '',
+                icon: icons.wallet,
+                badgeTextColor: 'white',
+              }}
+            />
+            <Separator />
+          </>
         )}
-        <Separator />
         {!isWindow && (
           <BrowserAction
             size={18}

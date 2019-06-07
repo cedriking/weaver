@@ -20,7 +20,7 @@ export class WalletsStore {
   public items: WalletItem[] = [];
 
   @observable
-  public defaultWallet: WalletItem;
+  public defaultWallet: WalletItem = null;
 
   @observable
   public itemsLoaded = this.getDefaultLoaded();
@@ -43,6 +43,9 @@ export class WalletsStore {
       }
 
       this.items = tmpItems;
+      const items = JSON.parse(JSON.stringify(this.items.filter(i => i.default)));
+
+      this.defaultWallet = items[0];
     });
   }
 
@@ -67,6 +70,7 @@ export class WalletsStore {
     if (!this.items.length) {
       item.default = true;
       this.defaultWallet = item;
+
     } else {
       item.default = false;
     }
@@ -93,12 +97,16 @@ export class WalletsStore {
   public removeItem(id: string) {
     this.items = this.items.filter(x => x._id !== id);
 
-    fs.unlink(getPath(`${this.walletsDir}/${id}.json`), e => {
-      if (e) console.warn(e);
-    });
-
     this.db.remove({ _id : id }, err => {
       if (err) return console.warn(err);
+
+      fs.unlink(getPath(`${this.walletsDir}/${id}.json`), e => {
+        if (e) console.warn(e);
+      });
+
+      if (this.defaultWallet && this.defaultWallet._id === id) {
+        this.defaultWallet = this.items[0];
+      }
     });
   }
 

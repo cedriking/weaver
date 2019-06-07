@@ -1,4 +1,3 @@
-import { arweaveDB } from '~/arweave';
 import { ipcMain } from 'electron';
 import { AppWindow } from '../app-window';
 
