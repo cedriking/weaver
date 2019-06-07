@@ -5,6 +5,7 @@ import { Theme } from '../../models/theme';
 export const StyledBrowserAction = styled.div`
   position: relative;
   margin-left: 8px;
+  user-select: all;
 `;
 
 interface BadgeProps {

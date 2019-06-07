@@ -14,13 +14,13 @@ import {
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
-import { WeatherCard } from '../WeatherCard';
 import { History } from '../History';
 import { Apps } from '../Apps';
 import { Bookmarks } from '../Bookmarks';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
+import { Wallets } from '~/renderer/app/components/Wallets';
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -66,6 +66,7 @@ export const Overlay = observer(() => {
         </Scrollable>
       </Container>
       <Apps />
+      <Wallets />
       <History />
       <Bookmarks />
     </StyledOverlay>

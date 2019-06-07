@@ -6,3 +6,5 @@ export * from './suggestion';
 export * from './browser-action';
 export * from './history-section';
 export * from './apps-section';
+export * from './wallet-item';
+export * from './wallet';

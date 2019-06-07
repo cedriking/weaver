@@ -1,4 +1,4 @@
-import { ipcMain, app, Menu, session } from 'electron';
+import { ipcMain, app, Menu, session, nativeImage } from 'electron';
 import { resolve, extname } from 'path';
 import { platform, homedir } from 'os';
 // @ts-ignore
@@ -26,6 +26,14 @@ export let settings: Settings = {};
 
 ipcMain.on('settings', (e: any, s: Settings) => {
   settings = { ...settings, ...s };
+});
+
+ipcMain.on('walletdrag', (e: any, filePath: string) => {
+  console.log('Drag started');
+  e.sender.startDrag({
+    file: filePath,
+    icon: nativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAmklEQVR4Ae2VtQGDQAAALxOkikwDZWSguA5A1gt9hClwaXD3u/7gnYyMiJx4pPSESAQSekZfhLBBz+GWAMdcoRMBHrlCj7QhjRtL0hIT2gOUEZqWFXLQY+1J6GtaQugEwKloSMbjXVZILjq0IxPTYxmTrZiWuvw9CC3LOrSHkkKmT+blhOJ9VHj5r3OFNuU8kBIRCJmebIGRTBgB5k5BBMC96AAAAABJRU5ErkJggg=='),
+  });
 });
 
 // app.setAsDefaultProtocolClient('http');

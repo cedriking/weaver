@@ -33,5 +33,11 @@ styleElement.textContent = `
 
 document.head.appendChild(styleElement);
 
+/*document.ondragover = document.ondrop = (e) => e.preventDefault();
+document.body.ondrop = e => {
+  console.log(e.dataTransfer.files[0]);
+  e.preventDefault();
+};*/
+
 store.tabGroups.addGroup();
 ReactDOM.render(<App />, document.getElementById('app'));

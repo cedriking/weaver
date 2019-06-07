@@ -31,6 +31,7 @@ import doneAll from '~/shared/resources/icons/done-all.svg';
 import wallet from '~/shared/resources/icons/wallet.svg';
 import widgets from '~/shared/resources/icons/widgets.svg';
 import viewModule from '~/shared/resources/icons/view-module.svg';
+import email from '~/shared/resources/icons/email.svg';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -69,4 +70,5 @@ export const icons = {
   wallet,
   widgets,
   viewModule,
+  email,
 };

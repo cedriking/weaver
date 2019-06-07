@@ -28,6 +28,8 @@ export const NavigationDrawer = ({
   search,
   onSearchInput,
   onBackClick,
+  onDragOver,
+  onDrop,
 }: {
   children?: any;
   title?: string;
@@ -35,9 +37,11 @@ export const NavigationDrawer = ({
   search?: boolean;
   onSearchInput?: (event: React.FormEvent<HTMLInputElement>) => void;
   onBackClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  onDragOver?: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  onDrop?: (e?: React.MouseEvent<HTMLDivElement>) => void;
 }) => {
   return (
-    <StyledNavigationDrawer>
+    <StyledNavigationDrawer onDragOver={onDragOver} onDrop={onDrop}>
       <Header>
         <Back onClick={onBack(onBackClick)} />
         <Title>{title}</Title>

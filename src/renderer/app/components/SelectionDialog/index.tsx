@@ -10,11 +10,13 @@ export const SelectionDialog = observer(
   ({
     amount,
     visible,
+    onSetDefaultClick,
     onDeleteClick,
     onCancelClick,
   }: {
     amount: number;
     visible: boolean;
+    onSetDefaultClick?: ClickEvent;
     onDeleteClick: ClickEvent;
     onCancelClick: ClickEvent;
   }) => {
@@ -24,6 +26,7 @@ export const SelectionDialog = observer(
         <Button style={{ marginLeft: 16 }} onClick={onDeleteClick}>
           Delete
         </Button>
+        {onSetDefaultClick && <Button style={{ marginLeft: 8 }} onClick={onSetDefaultClick}>Default</Button> }
         <Button
           background={
             store.theme['overlay.foreground'] === 'light'

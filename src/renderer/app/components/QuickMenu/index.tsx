@@ -10,7 +10,7 @@ import { darkTheme, lightTheme } from '~/renderer/constants/themes';
 import { getCurrentWindow } from '../../utils';
 import { ipcRenderer } from 'electron';
 
-const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'arweaveapps') => () => {
+const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'arweaveapps' | 'wallets') => () => {
   store.overlay.currentContent = content;
 };
 
@@ -44,100 +44,127 @@ const onAlwaysClick = () => {
 export const QuickMenu = observer(() => {
   const invert = store.theme['overlay.foreground'] === 'light';
   return (
-    <Section
-      onClick={preventHiding}
-      style={{
-        display: 'flex',
-        flexFlow: 'column',
-        alignItems: 'center',
-        padding: 16,
-      }}
-    >
-      <Actions>
-        <Bubble
-          toggled={store.isAlwaysOnTop}
-          onClick={onAlwaysClick}
-          invert={invert}
-          icon={icons.window}
-        >
-          Always on top
-        </Bubble>
-        <Bubble
-          toggled={store.settings.isDarkTheme}
-          onClick={onDarkClick}
-          invert={invert}
-          icon={icons.night}
-        >
-          Dark mode
-        </Bubble>
-        <Bubble
-          invert={invert}
-          toggled={store.settings.isShieldToggled}
-          icon={icons.shield}
-          onClick={onShieldClick}
-        >
-          Shield
-        </Bubble>
-      </Actions>
-      <Line />
-      <Actions>
-        <Bubble
+    <>
+      <Section
+        onClick={preventHiding}
+        style={{
+          display: 'flex',
+          flexFlow: 'column',
+          alignItems: 'center',
+          padding: 16,
+        }}
+      >
+        <Actions>
+          <Bubble
             onClick={changeContent('arweaveapps')}
             invert={invert}
             icon={icons.fire}
-        >
-          Apps
-        </Bubble>
-        <Bubble
-          onClick={changeContent('history')}
-          invert={invert}
-          icon={icons.history}
-        >
-          History
-        </Bubble>
-        <Bubble
-          onClick={changeContent('bookmarks')}
-          invert={invert}
-          icon={icons.bookmarks}
-        >
-          Bookmarks
-        </Bubble>
-        {/*<Bubble disabled invert={invert} icon={icons.download}>
-          Downloads
-        </Bubble>
-        <Bubble invert={invert} icon={icons.settings}>
-          Settings
-        </Bubble>
-        <Bubble disabled invert={invert} icon={icons.extensions}>
-          Extensions
-        </Bubble>*/}
-        <Bubble
-          disabled={!store.tabs.selectedTab}
-          invert={invert}
-          icon={icons.find}
-          onClick={onFindClick}
-        >
-          Find
-        </Bubble>
-        <Bubble
+          >
+            Apps
+          </Bubble>
+          <Bubble
+            invert={invert}
+            onClick={changeContent('wallets')}
+            icon={icons.wallet}
+          >
+            Wallets
+          </Bubble>
+          {/*<Bubble
+            invert={invert}
+            icon={icons.email}
+          >
+            WeaveMail
+          </Bubble>*/}
+          <Bubble
             toggled={store.arweaveServer.peersReady}
             invert={invert}
             icon={store.arweaveServer.isRunningLocally ? icons.viewModule : icons.widgets}
-        >
-          {store.arweaveServer.height}
-        </Bubble>
-      </Actions>
-      {/*<Actions>
-        <Bubble disabled invert={invert} icon={icons.window}>
-          New window
-        </Bubble>
-        <Bubble disabled invert={invert} icon={icons.window}>
-          Incognito
-        </Bubble>
-        <Bubble disabled invert={invert} icon={icons.window}>
-          Tor
-        </Bubble>
-      </Actions>*/}
-    </Section>
+          >
+            {store.arweaveServer.height}
+          </Bubble>
+        </Actions>
+      </Section>
+      <Section
+        onClick={preventHiding}
+        style={{
+          display: 'flex',
+          flexFlow: 'column',
+          alignItems: 'center',
+          padding: 16,
+        }}
+      >
+        <Actions>
+          <Bubble
+            toggled={store.isAlwaysOnTop}
+            onClick={onAlwaysClick}
+            invert={invert}
+            icon={icons.window}
+          >
+            Always on top
+          </Bubble>
+          <Bubble
+            toggled={store.settings.isDarkTheme}
+            onClick={onDarkClick}
+            invert={invert}
+            icon={icons.night}
+          >
+            Dark mode
+          </Bubble>
+          <Bubble
+            invert={invert}
+            toggled={store.settings.isShieldToggled}
+            icon={icons.shield}
+            onClick={onShieldClick}
+          >
+            Shield
+          </Bubble>
+        </Actions>
+        <Line />
+        <Actions>
+          <Bubble
+            onClick={changeContent('history')}
+            invert={invert}
+            icon={icons.history}
+          >
+            History
+          </Bubble>
+          <Bubble
+            onClick={changeContent('bookmarks')}
+            invert={invert}
+            icon={icons.bookmarks}
+          >
+            Bookmarks
+          </Bubble>
+          {/*<Bubble disabled invert={invert} icon={icons.download}>
+            Downloads
+          </Bubble>
+          <Bubble invert={invert} icon={icons.settings}>
+            Settings
+          </Bubble>
+          <Bubble disabled invert={invert} icon={icons.extensions}>
+            Extensions
+          </Bubble>*/}
+          <Bubble
+            disabled={!store.tabs.selectedTab}
+            invert={invert}
+            icon={icons.find}
+            onClick={onFindClick}
+          >
+            Find
+          </Bubble>
+        </Actions>
+        {/*<Actions>
+          <Bubble disabled invert={invert} icon={icons.window}>
+            New window
+          </Bubble>
+          <Bubble disabled invert={invert} icon={icons.window}>
+            Incognito
+          </Bubble>
+          <Bubble disabled invert={invert} icon={icons.window}>
+            Tor
+          </Bubble>
+        </Actions>*/}
+      </Section>
+    </>
   );
 });

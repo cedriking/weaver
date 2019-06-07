@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { platform } from 'os';
 
 import store from '~/renderer/app/store';
 import { StyledToolbar, Buttons, Separator } from './style';
@@ -14,6 +13,12 @@ import { Find } from '../Find';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
+};
+
+const onWalletDrag = (e: any) => {
+  e.preventDefault();
+  console.log('Wallet dragged');
+  ipcRenderer.send('walletdrag', 'C:/Users/cedri_tn22u5y/Documents/arweave-keyfile.json');
 };
 
 @observer
@@ -57,6 +62,21 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
+        {!isWindow && (
+          <BrowserAction
+            size={18}
+            style={{ marginLeft: 0 }}
+            opacity={0.54}
+            onDragStart={onWalletDrag}
+            data={{
+              badgeBackgroundColor: 'gray',
+              badgeText: '',
+              icon: icons.wallet,
+              badgeTextColor: 'white',
+            }}
+          />
+        )}
+        <Separator />
         {!isWindow && (
           <BrowserAction
             size={18}

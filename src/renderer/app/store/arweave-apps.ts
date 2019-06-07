@@ -153,7 +153,10 @@ export class ArweaveAppsStore {
   public addItem(items: ArweaveappItem[]) {
     return new Promise((resolve) => {
       this.db.insert(items, (err: any, docs: ArweaveappItem[]) => {
-        if (err) return console.error(err);
+        if (err) {
+          resolve(false);
+          return console.error(err);
+        }
 
         this.items = docs;
 

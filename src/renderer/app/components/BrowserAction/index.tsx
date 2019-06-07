@@ -11,6 +11,7 @@ interface Props {
   size?: number;
   style?: any;
   opacity?: number;
+  onDragStart?: any;
 }
 
 const onClick = (tabId: number) => () => {
@@ -25,11 +26,11 @@ const onClick = (tabId: number) => () => {
   }
 };
 
-const Component = observer(({ data, size, style, opacity }: Props) => {
+const Component = observer(({ data, size, style, opacity, onDragStart }: Props) => {
   const { icon, badgeText, badgeBackgroundColor, badgeTextColor, tabId } = data;
 
   return (
-    <StyledBrowserAction style={style} onClick={onClick(tabId)}>
+    <StyledBrowserAction style={style} onDragStart={onDragStart}>
       <ToolbarButton opacity={opacity} size={size} icon={icon} />
       {badgeText.trim() !== '' && (
         <Badge background={badgeBackgroundColor} color={badgeTextColor}>
