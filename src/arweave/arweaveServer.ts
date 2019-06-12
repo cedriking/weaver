@@ -41,7 +41,7 @@ export class ArweaveServer {
         this.trigger('info-updated', this._info);
       } else {
         this._info = {
-          network: 'arweave.browser.1',
+          network: 'arweave.weaver.1',
           version: 5,
           release: 23,
           height: -1,
