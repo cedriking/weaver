@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
-import { arweaveDB } from '~/arweave';
-import { ArweaveInfo } from '~/arweave/models';
+import { weaverServer } from '~/weaver-server';
+import { ArweaveInfo } from '~/weaver-server/models';
 import { ipcRenderer } from 'electron';
 import store from '~/renderer/app/store/index';
 
@@ -14,20 +14,28 @@ export class ArweaveStore {
   @observable
   public peersReady: boolean = false;
 
+  @observable
+  public serverStarted: boolean = false;
+
   constructor() {
-    arweaveDB.on('info-updated', (info: ArweaveInfo) => {
+    weaverServer.on('info-updated', (info: ArweaveInfo) => {
       // console.log('info updated', info);
       this.height = info.height < 0 ? 0 : info.height;
     });
 
-    arweaveDB.on('syncronized', (isSynced: boolean) => {
+    weaverServer.on('syncronized', (isSynced: boolean) => {
       this.isRunningLocally = isSynced;
-      ipcRenderer.send('arweave-server-synced', store.arweaveServer.isRunningLocally);
+      ipcRenderer.send('weaver-server-synced', store.arweaveServer.isRunningLocally);
     });
 
-    arweaveDB.on('peers-ready', () => {
+    weaverServer.on('peers-ready', () => {
       this.peersReady = true;
-      ipcRenderer.send('arweave-server-loaded');
+      ipcRenderer.send('weaver-server-loaded');
+    });
+
+    weaverServer.on('server-started', () => {
+      this.serverStarted = true;
+      ipcRenderer.send('weaver-server-started');
     });
 
     /*arweaveDB.on('transactions-added', (txs: ArweaveTransaction[]) => {

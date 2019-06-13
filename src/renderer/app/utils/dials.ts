@@ -1,13 +1,12 @@
 import store from '../store';
-import { arweaveDB } from '~/arweave';
 
 export const onSiteClick = (url: string) => () => {
   const uri = url;
   if (!url.includes('://') && url.length >= 43) {
-    if (!store.arweaveServer.peersReady) {
+    if (!store.arweaveServer.serverStarted) {
       url = `https://arweave.net/${url}`;
     } else {
-      url = `http://localhost:1985/${url}`;
+      url = `http://localhost:1984/${url}`;
     }
   }
 

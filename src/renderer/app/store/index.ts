@@ -19,7 +19,7 @@ import { DownloadsStore } from './downloads';
 import { lightTheme, darkTheme } from '~/renderer/constants/themes';
 import { ArweaveAppsStore } from './arweave-apps';
 import { ArweaveStore } from './arweave';
-import {WalletsStore} from '~/renderer/app/store/wallets';
+import { WalletsStore } from '~/renderer/app/store/wallets';
 
 export class Store {
   public history = new HistoryStore();

@@ -1,5 +1,6 @@
 export interface ArweaveInfo {
   network: string;
+  client: string;
   version: number;
   release: number;
   height: number;
