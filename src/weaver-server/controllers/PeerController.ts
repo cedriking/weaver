@@ -138,6 +138,10 @@ export default class PeerController {
     if (this.activePeers[index]) {
       this.activePeers.splice(index, 1);
     }
+
+    if (!this.activePeers.length) {
+      this.activePeers = [{ peer: 'https://arweave.net', info: null }];
+    }
   }
 
   public async update() {
