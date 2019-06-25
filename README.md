@@ -69,6 +69,10 @@ $ npm run <command>
 
 ### Changelog
 ```
+v1.0.4
+- P2P (Wildfire) feature enabled.
+- Renamed .arweave-browser app data file to .weaver
+
 v1.0.3
 - You can add your wallets JSON files to the browser.
 - When a wallet is added, easily login by drag & drop for the wallet icon.
