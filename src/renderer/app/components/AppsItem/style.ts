@@ -30,7 +30,7 @@ export const Favicon = styled.div`
 `;
 
 export const Title = styled.div`
-  flex: 3;
+  flex: 2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -43,11 +43,6 @@ export const Title = styled.div`
 `;
 
 export const Site = styled.div`
-  flex: 2;
-  opacity: 0.54;
-`;
-
-export const Time = styled.div`
-  flex: 1;
+  flex: 3;
   opacity: 0.54;
 `;
