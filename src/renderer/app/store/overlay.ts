@@ -37,7 +37,7 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public currentContent: 'default' | 'history' | 'arweaveapps' | 'wallets' | 'bookmarks' = 'default';
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'wallets' | 'settings' | 'arweaveapps' = 'default';
 
   @observable
   public dialTypeMenuVisible = false;
