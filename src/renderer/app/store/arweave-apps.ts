@@ -61,7 +61,7 @@ export class ArweaveAppsStore {
   public async load() {
     let hasItems = false;
 
-    await this.db.find({}).exec((err: any, tmpItems: ArweaveappItem[]) => {
+    this.db.find({}).exec((err: any, tmpItems: ArweaveappItem[]) => {
       if (err) {
         return console.warn(err);
       }
