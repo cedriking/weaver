@@ -11,7 +11,7 @@ export const Sections = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.label`
   font-weight: 100
 `;
 

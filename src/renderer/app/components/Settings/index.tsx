@@ -6,7 +6,7 @@ import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { ContextMenu, ContextMenuItem } from '~/renderer/app/components/ContextMenu';
 import { icons } from '~/renderer/app/constants';
-import {Input} from "~/renderer/app/components/Find/style";
+import { Input } from '~/renderer/app/components/Find/style';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 

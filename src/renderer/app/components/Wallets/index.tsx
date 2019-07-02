@@ -7,6 +7,8 @@ import { Sections } from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
+import { ListItem, SettingsSection, Title } from '~/renderer/app/components/Settings/style';
+import { Input } from '~/renderer/app/components/Find/style';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -68,10 +70,22 @@ const WalletSections = observer(() => {
   return (
     <Sections>
       <Content>
+        <WalletPasswordSections />
         <WalletSection items={store.wallets.items} />
       </Content>
     </Sections>
   );
+});
+
+const WalletPasswordSections = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title style={{ fontSize: '15px' }} htmlFor="walletpwd">Password (Encrypt wallet files)</Title>
+        <Input id="walletpwd" type="password" value={store.wallets.walletPassword} onChange={setWalletPassword} style={{ marginLeft: 'auto', width: '50%' }} />
+      </ListItem>
+    </SettingsSection>
+  )
 });
 
 const MenuItem = observer(
@@ -108,12 +122,6 @@ export const Wallets = observer(() => {
           <div style={{ flex: 1 }} />
           <NavigationDrawer.Item>Always keep a copy of your wallets</NavigationDrawer.Item>
         </NavigationDrawer>
-        <input type="password" value={store.wallets.walletPassword} onChange={setWalletPassword} style={{
-          marginTop: 50,
-          width: '50%',
-          marginLeft: 300,
-          padding: 10,
-        }} />
         <WalletSections />
         <SelectionDialog
           visible={length > 0}

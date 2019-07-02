@@ -70,6 +70,9 @@ $ npm run <command>
 
 ### Changelog
 ```
+v1.0.5
+- Added settings (search engine options + weaver server port)
+
 v1.0.4
 - P2P (Wildfire) feature enabled.
 - Renamed .arweave-browser app data file to .weaver
