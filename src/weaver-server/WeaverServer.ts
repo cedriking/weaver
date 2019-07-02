@@ -6,7 +6,7 @@ import InfoController from '~/weaver-server/controllers/InfoController';
 import PeerController from '~/weaver-server/controllers/PeerController';
 import TransactionController from '~/weaver-server/controllers/TransactionController';
 import BlockController from '~/weaver-server/controllers/BlockController';
-import {AxiosResponse} from 'axios';
+import { AxiosResponse } from 'axios';
 
 export class WeaverServer {
   private _triggers: Map<string, Function[]> = new Map();

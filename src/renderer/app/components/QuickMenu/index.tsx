@@ -137,11 +137,11 @@ export const QuickMenu = observer(() => {
           </Bubble>
           {/*<Bubble disabled invert={invert} icon={icons.download}>
             Downloads
-          </Bubble>
+          </Bubble>*/}
           <Bubble invert={invert} icon={icons.settings} onClick={changeContent('settings')}>
             Settings
           </Bubble>
-          <Bubble disabled invert={invert} icon={icons.extensions}>
+          {/*<Bubble disabled invert={invert} icon={icons.extensions}>
             Extensions
           </Bubble>*/}
           <Bubble

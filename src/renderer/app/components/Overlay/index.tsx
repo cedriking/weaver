@@ -21,6 +21,7 @@ import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
 import { Wallets } from '~/renderer/app/components/Wallets';
+import { Settings } from '~/renderer/app/components/Settings';
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -69,6 +70,7 @@ export const Overlay = observer(() => {
       <Wallets />
       <History />
       <Bookmarks />
+      <Settings />
     </StyledOverlay>
   );
 });
