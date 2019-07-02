@@ -1,16 +1,16 @@
 !macro customInstall
-  WriteRegStr SHCTX "SOFTWARE\RegisteredApplications" "Arweave" "Software\Clients\StartMenuInternet\Arweave\Capabilities"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities\StartMenu" "StartMenuInternet" "Arweave"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave" "" "Arweave"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities" "ApplicationDescription" "A privacy-focused, extensible and beautiful web browser"
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\Capabilities" "ApplicationName" "Arweave"
-  WriteRegDWORD SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\InstallInfo" "IconsVisible" 1
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave\shell\open\command" "" "$0\Arweave.exe"
-  WriteRegStr HKCU "SOFTWARE\Classes\BraveBetaHTML\shell\open\command" "" '"$0\Arweave.exe" -- "%1"'
-  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\BraveBeta\Capabilities\URLAssociations" "http" "Arweave"
+  WriteRegStr SHCTX "SOFTWARE\RegisteredApplications" "Weaver" "Software\Clients\StartMenuInternet\Weaver\Capabilities"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver\Capabilities\StartMenu" "StartMenuInternet" "Weaver"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver" "" "Weaver"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver\Capabilities" "ApplicationDescription" "A privacy-focused, extensible and beautiful web browser"
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver\Capabilities" "ApplicationName" "Weaver"
+  WriteRegDWORD SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver\InstallInfo" "IconsVisible" 1
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver\shell\open\command" "" "$0\Weaver.exe"
+  WriteRegStr HKCU "SOFTWARE\Classes\BraveBetaHTML\shell\open\command" "" '"$0\Weaver.exe" -- "%1"'
+  WriteRegStr SHCTX "SOFTWARE\Clients\StartMenuInternet\BraveBeta\Capabilities\URLAssociations" "http" "Weaver"
 !macroend
 !macro customUnInstall
-  DeleteRegKey HKCU "SOFTWARE\Classes\Arweave"
-  DeleteRegKey SHCTX "SOFTWARE\Clients\StartMenuInternet\Arweave"
-  DeleteRegValue SHCTX "SOFTWARE\RegisteredApplications" "Arweave"
+  DeleteRegKey HKCU "SOFTWARE\Classes\Weaver"
+  DeleteRegKey SHCTX "SOFTWARE\Clients\StartMenuInternet\Weaver"
+  DeleteRegValue SHCTX "SOFTWARE\RegisteredApplications" "Weaver"
 !macroend
