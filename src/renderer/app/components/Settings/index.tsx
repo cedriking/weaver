@@ -6,6 +6,7 @@ import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { ContextMenu, ContextMenuItem } from '~/renderer/app/components/ContextMenu';
 import { icons } from '~/renderer/app/constants';
+import {Input} from "~/renderer/app/components/Find/style";
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -48,17 +49,6 @@ const setEngine = (ev: any, engine: 'google' | 'bing' | 'yahoo' | 'duckduckgo') 
   document.getElementById('ctx-item-d').style.backgroundColor = (engine === 'duckduckgo') ? engineHex : '';
 };
 
-const MenuItem = observer(
-  ({ selected, children, display, style }: { selected: boolean, children: any, display: any, style?: any }) => (
-    <NavigationDrawer.Item
-      selected={selected}
-      onClick={() => (store.settingsStore.currentDisplay = display)}
-    >
-      {children}
-    </NavigationDrawer.Item>
-  ),
-);
-
 export const SearchEngines = observer(() => {
   return (
     <SettingsSection>
@@ -82,6 +72,11 @@ export const SearchEngines = observer(() => {
           </ContextMenu>
         </Buttons>
       </ListItem>
+
+      <ListItem>
+        <Title style={{ fontSize: '15px' }}>Server Port (restart Weaver if changed)</Title>
+        <Input type="number" value={store.settingsStore.port} onChange={(e) => store.settingsStore.setPort(+e.target.value)} style={{ marginLeft: 'auto', width: '60px' }} />
+      </ListItem>
     </SettingsSection>
   );
 });
@@ -99,10 +94,7 @@ export const Settings = observer(() => {
         <NavigationDrawer
           title="Settings"
           onBackClick={onBackClick}
-        >
-          <MenuItem selected={store.settingsStore.currentDisplay === 'search_engine'} display="search_engine">Search Engine</MenuItem>
-          <MenuItem selected={store.settingsStore.currentDisplay === 'server_settings'} display="server_settings">Server Settings</MenuItem>
-        </NavigationDrawer>
+        />
         <Sections>
           <Content>
             {store.settingsStore.currentDisplay === 'search_engine' && <SearchEngines />}
