@@ -20,6 +20,7 @@ import { lightTheme, darkTheme } from '~/renderer/constants/themes';
 import { ArweaveAppsStore } from './arweave-apps';
 import { ArweaveStore } from './arweave';
 import { WalletsStore } from '~/renderer/app/store/wallets';
+import { SettingsStore } from '~/renderer/app/store/settings';
 
 export class Store {
   public history = new HistoryStore();
@@ -35,6 +36,7 @@ export class Store {
   public arweaveApps = new ArweaveAppsStore();
   public arweaveServer = new ArweaveStore();
   public wallets = new WalletsStore();
+  public settingsStore = new SettingsStore();
 
   @observable
   public theme = lightTheme;

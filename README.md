@@ -1,12 +1,13 @@
 <p align="center">
-  <a href="https://arweave.org"><img src="static/app-icons/icon.png" width="256"></a>
+  <img src="static/app-icons/icon.png" width="256">
 </p>
 
 <div align="center">
   <h1>Weaver</h1>
 
 Weaver is an extensible and privacy-focused web browser with a totally different user experience, built on top of `Electron`, `TypeScript`, `React` and `styled-components`. It aims to be fast, private, beautiful, extensible and functional.
-The main idea of the browser is to easily navigate the permaweb, faster, more secure and with extra features.
+The main idea of the browser is to easily navigate the permaweb by [Arweave](https://arweave.org), and all it's amazing features.
+Weaver is based on the `wexond` source. Big thanks to them.
 
 </div>
 

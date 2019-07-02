@@ -29,7 +29,18 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         url = `http://localhost:1984/${text}`;
       }
     } else if (!text.includes('://')) {
-      url = `https://www.google.com/search?q=${text}`;
+      let searchUrl;
+      if (store.settingsStore.searchEngine === 'google') {
+        searchUrl = 'https://www.google.com/search?hl=en&q=';
+      } else if (store.settingsStore.searchEngine === 'yahoo') {
+        searchUrl = 'https://search.yahoo.com/search?p=';
+      } else if (store.settingsStore.searchEngine === 'bing') {
+        searchUrl = 'https://www.bing.com/search?q=';
+      } else if (store.settingsStore.searchEngine === 'duckduckgo') {
+        searchUrl = 'https://duckduckgo.com/?q=';
+      }
+
+      url = `${searchUrl}${text}`;
     }
 
     e.currentTarget.value = url;

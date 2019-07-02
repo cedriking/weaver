@@ -113,10 +113,21 @@ export const getSearchSuggestions = (filter: string) =>
       return resolve([]);
     }
 
+    let searchUrl;
+    if (store.settingsStore.searchEngine === 'google') {
+      searchUrl = 'https://www.google.com/search?hl=en&q=';
+    } else if (store.settingsStore.searchEngine === 'yahoo') {
+      searchUrl = 'https://search.yahoo.com/search?p=';
+    } else if (store.settingsStore.searchEngine === 'bing') {
+      searchUrl = 'https://www.bing.com/search?q=';
+    } else if (store.settingsStore.searchEngine === 'duckduckgo') {
+      searchUrl = 'https://duckduckgo.com/?q=';
+    }
+
     try {
       const data = JSON.parse(
         (await requestURL(
-          `http://google.com/complete/search?client=chrome&q=${encodeURIComponent(
+          `${searchUrl}/q=${encodeURIComponent(
             input,
           )}`,
         )).data,

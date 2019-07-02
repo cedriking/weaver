@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import * as restify from 'restify';
 import { getPath } from '~/shared/utils/paths';
 import { ArweaveDB } from 'arweavedb';
@@ -6,7 +6,7 @@ import InfoController from '~/weaver-server/controllers/InfoController';
 import PeerController from '~/weaver-server/controllers/PeerController';
 import TransactionController from '~/weaver-server/controllers/TransactionController';
 import BlockController from '~/weaver-server/controllers/BlockController';
-import {AxiosResponse} from 'axios';
+import {settingsFile} from "~/renderer/app/store/settings";
 
 export class WeaverServer {
   private _triggers: Map<string, Function[]> = new Map();
@@ -144,7 +144,8 @@ export class WeaverServer {
       });
     });
 
-    this.server.listen('1984', () => {
+    const port = settingsFile.get('serverPort') || 1984;
+    this.server.listen(port, () => {
       console.log('listening at %', this.server.url);
       this.trigger('server-started');
     });
