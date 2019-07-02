@@ -8,7 +8,7 @@ import { onSiteClick } from '../../utils/dials';
 export const ArweaveApps = observer(() => {
   return (
     <Actions>
-      {store.arweaveApps.items.map(item => (
+      {store.arweaveApps.homeItems.map(item => (
         <Bubble
           itemsPerRow={6}
           onClick={onSiteClick(`${item.linkId}`)}

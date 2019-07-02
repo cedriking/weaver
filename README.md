@@ -71,7 +71,8 @@ $ npm run <command>
 ### Changelog
 ```
 v1.0.5
-- Added settings (search engine options + weaver server port)
+- Added settings (search engine options + weaver server port).
+- Limited home apps to 16 ordered by votes, can still find all apps on Apps section.
 
 v1.0.4
 - P2P (Wildfire) feature enabled.

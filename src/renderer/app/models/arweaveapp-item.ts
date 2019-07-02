@@ -10,4 +10,5 @@ export interface ArweaveappItem {
   title?: string;
   type?: string;
   'unix-time'?: string;
+  votes?: number;
 }

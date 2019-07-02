@@ -30,9 +30,13 @@ export class ArweaveAppsStore {
   });
 
   private updateTime = 60000 * 30;
+  private homeLimit = 18;
 
   @observable
   public items: ArweaveappItem[] = [];
+
+  @observable
+  public homeItems: ArweaveappItem[] = [];
 
   @observable
   public itemsLoaded = this.getDefaultLoaded();
@@ -71,6 +75,13 @@ export class ArweaveAppsStore {
       hasItems = (tmpItems.length > 0);
 
       this.items = tmpItems;
+
+      tmpItems.sort((a: ArweaveappItem, b: ArweaveappItem) => a.votes < b.votes ? 1 : a.votes > b.votes ? -1 : 0);
+      const tmpHome: ArweaveappItem[] = [];
+      for (let i = 0; i < this.homeLimit; i++) {
+        tmpHome.push(tmpItems[i]);
+      }
+      this.homeItems = tmpHome;
     });
 
     if (!hasItems) {
@@ -131,6 +142,7 @@ export class ArweaveAppsStore {
       for (let i = 0, j = tmpItems.length; i < j; i++) {
         if (!tmpSet.has(`${tmpItems[i].title}-${tmpItems[i].from}`) && categories.find(cat => cat === tmpItems[i].category)) {
           // tmpItems[i].fromUser = await accounts.getUsername(tmpItems[i].from);
+          tmpItems[i].votes = await this.getAppVotes(tmpItems[i].id);
 
           tmp.push(tmpItems[i]);
           tmpSet.add(`${tmpItems[i].title}-${tmpItems[i].from}`);
@@ -138,10 +150,17 @@ export class ArweaveAppsStore {
       }
 
       if (tmp.length) {
-        tmp.sort((a: any, b: any) => a.title > b.title ? 1 : a.title < b.title ? -1 : 0);
+        tmp.sort((a: ArweaveappItem, b: ArweaveappItem) => a.title > b.title ? 1 : a.title < b.title ? -1 : 0);
       }
 
       tmpItems = tmp;
+
+      tmp.sort((a: ArweaveappItem, b: ArweaveappItem) => a.votes < b.votes ? 1 : a.votes > b.votes ? -1 : 0);
+      const tmpHome: ArweaveappItem[] = [];
+      for (let i = 0; i < this.homeLimit; i++) {
+        tmpHome.push(tmp[i]);
+      }
+      this.homeItems = tmpHome;
     }
 
     await this.clearAsync();
@@ -273,5 +292,32 @@ export class ArweaveAppsStore {
 
   private capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  private async getAppVotes(appId: string) {
+    const queryVotes = {
+      op: 'and',
+      expr1: {
+        op: 'and',
+        expr1: {
+          op: 'equals',
+          expr1: 'App-Name',
+          expr2: 'arweaveapps',
+        },
+        expr2: {
+          op: 'equals',
+          expr1: 'Type',
+          expr2: 'vote',
+        },
+      },
+      expr2: {
+        op: 'equals',
+        expr1: 'Link-Id',
+        expr2: appId,
+      },
+    };
+
+    const res = await arweaveNetwork.api.post('arql', queryVotes);
+    return res.data.length;
   }
 }
