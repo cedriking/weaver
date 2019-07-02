@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
+import { Theme } from '~/renderer/app/models/theme';
+import { transparency } from '~/renderer/constants';
 
 export const StyledFind = styled.div`
   height: 32px;
@@ -36,6 +38,11 @@ export const Input = styled.input`
   outline: none;
   background: transparent;
   margin-left: 8px;
+  color: white;
+
+  ${({ theme } : { theme?: Theme }) => css`
+    color: ${theme['overlay.foreground'] === 'light' ? 'white' : `rgba(0, 0, 0, ${transparency.text.high})`}
+  `}
 `;
 
 export const Button = styled.div`

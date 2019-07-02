@@ -36,6 +36,12 @@ const engineHex = '#585858c7';
 const toggleSEMenu = (e: any) => {
   e.stopPropagation();
   store.settingsStore.searchEngineCtx = !store.settingsStore.searchEngineCtx;
+
+  const engine = store.settingsStore.searchEngine;
+  document.getElementById('ctx-item-g').style.backgroundColor = (engine === 'google') ? engineHex : '';
+  document.getElementById('ctx-item-b').style.backgroundColor = (engine === 'bing') ? engineHex : '';
+  document.getElementById('ctx-item-y').style.backgroundColor = (engine === 'yahoo') ? engineHex : '';
+  document.getElementById('ctx-item-d').style.backgroundColor = (engine === 'duckduckgo') ? engineHex : '';
 };
 
 const setEngine = (ev: any, engine: 'google' | 'bing' | 'yahoo' | 'duckduckgo') => {
