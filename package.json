@@ -10,7 +10,7 @@
     "weaver-browser",
     "arweave"
   ],
-  "homepage": "https://github.com/GoldZeus/arweave-browser/#readme",
+  "homepage": "https://github.com/GoldZeus/weaver/#readme",
   "main": "build/main.js",
   "author": {
     "name": "GoldZeus",
@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GoldZeus/arweave-browser.git"
+    "url": "git+https://github.com/GoldZeus/weaver.git"
   },
   "bugs": {
-    "url": "https://github.com/GoldZeus/arweave-browser/issues"
+    "url": "https://github.com/GoldZeus/weaver/issues"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV='dev' node fuse.js",
