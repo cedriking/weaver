@@ -1,4 +1,7 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import {centerIcon} from "~/shared/mixins";
+import {icons} from "~/renderer/app/constants";
+import {Theme} from "~/renderer/app/models/theme";
 
 export const Sections = styled.div`
   margin-left: 300px;
@@ -39,4 +42,21 @@ export const SettingsSection = styled.div`
   padding: 8px 0px;
   margin-top: 48px;
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
+`;
+
+export const DropArrow = styled.div`
+  ${centerIcon(24)};
+  margin-left: 8px;
+  height: 32px;
+  width: 32px;
+  background-image: url(${icons.down});
+  border-radius: 50%;
+  transition: 0.1s background-color;
+  cursor: pointer;
+
+  ${({ theme }: { theme?: Theme }) => css`
+    filter: ${theme['overlay.foreground'] === 'light'
+  ? 'invert(100%)'
+  : 'none'};
+  `}
 `;

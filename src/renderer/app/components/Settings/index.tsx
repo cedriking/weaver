@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import store from '../../store';
-import AppsSection from '../AppsSection';
-import { Buttons, Sections, SettingsSection, Title, ListItem } from './style';
+import { Buttons, Sections, SettingsSection, Title, ListItem, DropArrow } from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
-import { Content, Container, Scrollable, DropArrow } from '../Overlay/style';
+import { Content, Container, Scrollable } from '../Overlay/style';
 import { ContextMenu, ContextMenuItem } from '~/renderer/app/components/ContextMenu';
 import { icons } from '~/renderer/app/constants';
 
@@ -31,7 +30,6 @@ const onBackClick = () => {
 };
 
 /*** Search Engine ***/
-let seMenuVisible = false;
 const engineHex = '#585858c7';
 
 const toggleSEMenu = (e: any) => {
@@ -39,37 +37,15 @@ const toggleSEMenu = (e: any) => {
   store.settingsStore.searchEngineCtx = !store.settingsStore.searchEngineCtx;
 };
 
-const setEngineGoogle = () => {
-  store.settingsStore.setSearchEngine('google');
-  seMenuVisible = false;
-  document.getElementById('ctx-item-g').style.backgroundColor = engineHex;
-  document.getElementById('ctx-item-b').style.backgroundColor = '';
-  document.getElementById('ctx-item-y').style.backgroundColor = '';
-  document.getElementById('ctx-item-d').style.backgroundColor = '';
-};
-const setEngineBing = () => {
-  store.settingsStore.setSearchEngine('bing');
-  seMenuVisible = false;
-  document.getElementById('ctx-item-g').style.backgroundColor = '';
-  document.getElementById('ctx-item-b').style.backgroundColor = engineHex;
-  document.getElementById('ctx-item-y').style.backgroundColor = '';
-  document.getElementById('ctx-item-d').style.backgroundColor = '';
-};
-const setEngineYahoo = () => {
-  store.settingsStore.setSearchEngine('yahoo');
-  seMenuVisible = false;
-  document.getElementById('ctx-item-g').style.backgroundColor = '';
-  document.getElementById('ctx-item-b').style.backgroundColor = '';
-  document.getElementById('ctx-item-y').style.backgroundColor = engineHex;
-  document.getElementById('ctx-item-d').style.backgroundColor = '';
-};
-const setEngineDuckDuckGo = () => {
-  store.settingsStore.setSearchEngine('duckduckgo');
-  seMenuVisible = false;
-  document.getElementById('ctx-item-g').style.backgroundColor = '';
-  document.getElementById('ctx-item-b').style.backgroundColor = '';
-  document.getElementById('ctx-item-y').style.backgroundColor = '';
-  document.getElementById('ctx-item-d').style.backgroundColor = engineHex;
+const setEngine = (ev: any, engine: 'google' | 'bing' | 'yahoo' | 'duckduckgo') => {
+  ev.preventDefault();
+
+  store.settingsStore.setSearchEngine(engine);
+  store.settingsStore.searchEngineCtx = false;
+  document.getElementById('ctx-item-g').style.backgroundColor = (engine === 'google') ? engineHex : '';
+  document.getElementById('ctx-item-b').style.backgroundColor = (engine === 'bing') ? engineHex : '';
+  document.getElementById('ctx-item-y').style.backgroundColor = (engine === 'yahoo') ? engineHex : '';
+  document.getElementById('ctx-item-d').style.backgroundColor = (engine === 'duckduckgo') ? engineHex : '';
 };
 
 const MenuItem = observer(
@@ -87,20 +63,20 @@ export const SearchEngines = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Title style={{ fontSize: '15px' }}>Search Engines</Title>
+        <Title style={{ fontSize: '15px' }}>Search Engines ({store.settingsStore.searchEngine})</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <DropArrow visible={true} onClick={toggleSEMenu} style={{ cursor: 'pointer' }} />
+          <DropArrow onClick={toggleSEMenu} />
           <ContextMenu id="search-engine-dp" visible={store.settingsStore.searchEngineCtx} style={{ marginLeft: '-61px' }}>
-            <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} id="ctx-item-g">
+            <ContextMenuItem icon={icons.search} onClick={(e) => setEngine(e, 'google')} id="ctx-item-g">
               Google
             </ContextMenuItem>
-            <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} id="ctx-item-y">
+            <ContextMenuItem onClick={(e) => setEngine(e, 'yahoo')} icon={icons.search} id="ctx-item-y">
               Yahoo
             </ContextMenuItem>
-            <ContextMenuItem icon={icons.search} onClick={setEngineBing} id="ctx-item-b">
+            <ContextMenuItem icon={icons.search} onClick={(e) => setEngine(e, 'bing')} id="ctx-item-b">
               Bing
             </ContextMenuItem>
-            <ContextMenuItem icon={icons.search} onClick={setEngineDuckDuckGo}  id="ctx-item-d">
+            <ContextMenuItem icon={icons.search} onClick={(e) => setEngine(e, 'duckduckgo')}  id="ctx-item-d">
               DuckDuckGo
             </ContextMenuItem>
           </ContextMenu>
