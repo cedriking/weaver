@@ -10,12 +10,12 @@ import { ArweaveappItem } from '../../models/arweaveapp-item';
 const onClick = (item: HistoryItem) => (e: React.MouseEvent) => {
   if (!e.ctrlKey) return;
 
-  const index = store.history.selectedItems.indexOf(item._id);
+  const index = store.arweaveApps.selectedItems.indexOf(item._id);
 
   if (index === -1) {
-    store.history.selectedItems.push(item._id);
+    store.arweaveApps.selectedItems.push(item._id);
   } else {
-    store.history.selectedItems.splice(index, 1);
+    store.arweaveApps.selectedItems.splice(index, 1);
   }
 };
 

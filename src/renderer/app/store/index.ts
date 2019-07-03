@@ -19,8 +19,9 @@ import { DownloadsStore } from './downloads';
 import { lightTheme, darkTheme } from '~/renderer/constants/themes';
 import { ArweaveAppsStore } from './arweave-apps';
 import { ArweaveStore } from './arweave';
-import { WalletsStore } from '~/renderer/app/store/wallets';
-import { SettingsStore } from '~/renderer/app/store/settings';
+import { WalletsStore } from './wallets';
+import { SettingsStore } from './settings';
+import { WeaveMailStore } from './weavemail';
 
 export class Store {
   public history = new HistoryStore();
@@ -37,6 +38,7 @@ export class Store {
   public arweaveServer = new ArweaveStore();
   public wallets = new WalletsStore();
   public settingsStore = new SettingsStore();
+  public weaveMailStore = new WeaveMailStore();
 
   @observable
   public theme = lightTheme;

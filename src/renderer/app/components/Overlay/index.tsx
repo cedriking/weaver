@@ -20,8 +20,9 @@ import { Bookmarks } from '../Bookmarks';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
-import { Wallets } from '~/renderer/app/components/Wallets';
-import { Settings } from '~/renderer/app/components/Settings';
+import { Wallets } from '../Wallets';
+import { Settings } from '../Settings';
+import { WeaveMail } from '../WeaveMail';
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -71,6 +72,7 @@ export const Overlay = observer(() => {
       <History />
       <Bookmarks />
       <Settings />
+      <WeaveMail />
     </StyledOverlay>
   );
 });

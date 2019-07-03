@@ -10,7 +10,7 @@ import { darkTheme, lightTheme } from '~/renderer/constants/themes';
 import { getCurrentWindow } from '../../utils';
 import { ipcRenderer } from 'electron';
 
-const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'arweaveapps' | 'wallets' | 'settings') => () => {
+const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'arweaveapps' | 'wallets' | 'settings' | 'weavemail') => () => {
   store.overlay.currentContent = content;
 };
 
@@ -69,12 +69,13 @@ export const QuickMenu = observer(() => {
           >
             Wallets
           </Bubble>
-          {/*<Bubble
+          <Bubble
             invert={invert}
             icon={icons.email}
+            onClick={changeContent('weavemail')}
           >
             WeaveMail
-          </Bubble>*/}
+          </Bubble>
           <Bubble
             toggled={store.arweaveServer.peersReady}
             invert={invert}
