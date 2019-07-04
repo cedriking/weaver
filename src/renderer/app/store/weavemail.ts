@@ -1,17 +1,39 @@
 import * as Datastore from 'nedb';
 import { getPath } from '~/shared/utils/paths';
 import { arweaveNetwork } from '~/shared/constants';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import * as notifier from 'node-notifier';
-import { app } from 'electron';
-import { resolve } from 'path';
+import { WalletItem } from '~/renderer/app/models';
+
+export interface WeaveMailItem {
+  id: string;
+  txStatus: string;
+  from: string;
+  subject: string;
+  message: string;
+  date: string;
+  unixTime: number;
+  tdFee: string;
+  tdQty: string;
+}
+
+interface WeaveMailSection {
+  label?: string;
+  items?: WeaveMailItem[];
+}
 
 export class WeaveMailStore {
   public db = new Datastore({
     filename: getPath('storage/weavemail.db'),
     autoload: true,
   });
+
+  @observable
+  public wallets: WalletItem[] = [];
+
+  @observable
+  public walletsData: JWKInterface[] = [];
 
   @observable
   public current: string = 'inbox';
@@ -103,6 +125,91 @@ export class WeaveMailStore {
     this.compose.balance = '0';
   }
 
+  @computed
+  public get sections() {
+    const list: WeaveMailSection[] = [];
+    let section: WeaveMailSection = {};
+
+    // @ts-ignore
+    this.wallets.forEach(async (wallet, i) => {
+      const key = await this.walletToKey(this.walletsData[i]);
+
+      const query = {
+        op: 'and',
+        expr1: {
+          op: 'equals',
+          expr1: 'to',
+          expr2: wallet.title,
+        },
+        expr2: {
+          op: 'equals',
+          expr1: 'App-Name',
+          expr2: 'permamail',
+        },
+      };
+
+      const res = await arweaveNetwork.api.post('arql', query);
+      let txRows: WeaveMailItem[] = [];
+      if (res.data === '') {
+        return txRows;
+      }
+
+      txRows = await Promise.all(res.data.map(async (id: string) => {
+        const txRow: any = {};
+        const tx = await arweaveNetwork.transactions.get(id);
+        txRow.unixTime = 0;
+        txRow.date = '';
+
+        // @ts-ignore
+        tx.get('tags').forEach(tag => {
+          const key = tag.get('name', { decode: true, string: true });
+          const val = tag.get('value', { decode: true, string: true });
+
+          if (key === 'Unix-Time') {
+            txRow.unixTime = +val;
+            txRow.date = this.timeConverter(txRow.unixTime);
+          }
+        });
+
+        txRow.id = id;
+        txRow.txStatus = await arweaveNetwork.transactions.getStatus(id);
+        txRow.from = await arweaveNetwork.wallets.ownerToAddress(tx.owner);
+        txRow.tdFee = arweaveNetwork.ar.winstonToAr(tx.reward);
+        txRow.tdQty = arweaveNetwork.ar.winstonToAr(tx.quantity);
+
+        let mail = arweaveNetwork.utils.bufferToString(await this.decryptMail(arweaveNetwork.utils.b64UrlToBuffer(tx.data), key));
+        mail = mail.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        mail = mail.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+        let mailContent;
+        try {
+          mailContent = JSON.parse(mail);
+        } catch (e) {}
+
+        txRow['message'] = mail;
+        txRow['subject'] = tx.id;
+
+        if (mailContent) {
+          txRow['message'] = mailContent.body;
+          txRow['subject'] = mailContent.subject;
+        }
+
+        return txRow;
+      }));
+
+      txRows.sort((a, b) => b.unixTime - a.unixTime);
+
+      section = {
+        label: wallet.title,
+        items: txRows,
+      };
+
+      list.push(section);
+    });
+
+    return list;
+  }
+
   private async encryptMail(content: string, subject: string, pubKey: CryptoKey) {
     const contentEncoder = new TextEncoder();
     const newFormat = JSON.stringify({ subject, body: content });
@@ -116,12 +223,13 @@ export class WeaveMailStore {
   }
 
   private async decryptMail(encryptedData: any, key: CryptoKey) {
-    const encryptedKey = new Uint8Array(encryptedData.slice(0, 512));
-    const encryptedMail = new Uint8Array(encryptedData.slice(512));
+    const encKey = new Uint8Array(encryptedData.slice(0, 512));
+    const encMail = new Uint8Array(encryptedData.slice(512));
 
-    const symmetricKey: any = await window.crypto.subtle.decrypt({ name: 'RSA-OAEP' }, key, encryptedKey);
+    const symmetricKey = await window.crypto.subtle.decrypt({ name: 'RSA-OAEP' }, key, encKey);
 
-    return arweaveNetwork.crypto.decrypt(encryptedMail, symmetricKey);
+    // @ts-ignore
+    return arweaveNetwork.crypto.decrypt(encMail, symmetricKey);
   }
 
   private async getPubKey(address: string) {
@@ -156,5 +264,29 @@ export class WeaveMailStore {
     window.crypto.getRandomValues(array);
 
     return array;
+  }
+
+  private timeConverter (unixTime: number) {
+    const a = new Date(unixTime * 1000);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const year = a.getFullYear();
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes();
+    const sec = a.getSeconds();
+    const time = `${date} ${month} ${year} ${hour}:${min}:${sec}`;
+
+    return time;
+  }
+
+  private async walletToKey(walletData: JWKInterface) {
+    const w = Object.create(walletData);
+    w.alg = 'RSA-OAEP-256';
+    w.ext = true;
+
+    const algo = { name: 'RSA-OAEP', hash: { name: 'SHA-256' } };
+
+    return await crypto.subtle.importKey('jwk', w, algo, false, ['decrypt']);
   }
 }

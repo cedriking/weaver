@@ -8,9 +8,12 @@ import { icons } from '~/renderer/app/constants';
 import { Input } from '~/renderer/app/components/SearchBox/style';
 import { StyledLabel } from '~/renderer/components/Button/styles';
 import Ripple from '~/renderer/components/Ripple';
-import {Buttons, DropArrow} from "~/renderer/app/components/Settings/style";
-import {ContextMenu, ContextMenuItem} from "~/renderer/app/components/ContextMenu";
-import {WalletItem} from "~/renderer/app/models";
+import { Buttons, DropArrow } from '~/renderer/app/components/Settings/style';
+import { ContextMenu, ContextMenuItem } from '~/renderer/app/components/ContextMenu';
+import { WeaveMailItem } from '~/renderer/app/store/weavemail';
+import { Item, Label } from '~/renderer/app/components/AppsSection/style';
+import { Site, Time } from '~/renderer/app/components/WalletItem/style';
+import { WalletItem } from '~/renderer/app/models';
 
 interface Props {
   background?: string;
@@ -115,8 +118,6 @@ export const ComposeFrom = observer(() => {
 });
 
 export const ShowCompose = observer((props) => {
-  console.log(props);
-
   return (
     <>
       <ComposeFrom />
@@ -157,15 +158,47 @@ export const ShowCompose = observer((props) => {
   );
 });
 
-export const ShowInbox = observer((props) => {
+const mailItemClick = (d: any) => {
+  console.log(d);
+};
+
+const MailItem = observer(({ data }: { data: WeaveMailItem }) => {
+  return (
+    <ListItem key={data.id} onClick={e => mailItemClick(data)}>
+      <Title>{data.subject}</Title>
+      <Site>{data.from}</Site>
+      <Time>{data.tdQty}</Time>
+    </ListItem>
+  );
+});
+
+const MailSection = observer(({ data }: { data: { label?: string; items?: WeaveMailItem[] } }) => {
+  return (
+    <Item>
+      <Label>{data.label}</Label>
+      {data.items.map((item: WeaveMailItem) => (
+        <MailItem key={item.id} data={item} />
+      ))}
+    </Item>
+  );
+});
+
+const ShowInbox = observer((props) => {
+  if (!store.weaveMailStore.wallets.length) {
+    store.weaveMailStore.wallets = store.wallets.items;
+    store.weaveMailStore.walletsData = store.wallets.items.map(wallet => store.wallets.decrypt(wallet));
+  }
+
   console.log(props);
 
   return (
-    <SettingsSection>
-      <ListItem>
-        <Title style={{ fontSize: '15px' }}>Hello World</Title>
-      </ListItem>
-    </SettingsSection>
+    <Sections>
+      <Content>
+        {store.weaveMailStore.sections.map(data => (
+          <MailSection data={data} key={data.label} />
+        ))}
+      </Content>
+    </Sections>
   );
 });
 
