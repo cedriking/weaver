@@ -19,6 +19,8 @@ app.setPath('userData', resolve(homedir(), '.weaver'));
 log.transports.file.level = 'verbose';
 log.transports.file.file = resolve(app.getPath('userData'), 'log.log');
 
+app.setAppUserModelId(process.execPath);
+
 ipcMain.setMaxListeners(0);
 
 export let appWindow: AppWindow;
@@ -34,9 +36,6 @@ ipcMain.on('walletdrag', (e: any, filePath: string) => {
     icon: nativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAmklEQVR4Ae2VtQGDQAAALxOkikwDZWSguA5A1gt9hClwaXD3u/7gnYyMiJx4pPSESAQSekZfhLBBz+GWAMdcoRMBHrlCj7QhjRtL0hIT2gOUEZqWFXLQY+1J6GtaQugEwKloSMbjXVZILjq0IxPTYxmTrZiWuvw9CC3LOrSHkkKmT+blhOJ9VHj5r3OFNuU8kBIRCJmebIGRTBgB5k5BBMC96AAAAABJRU5ErkJggg=='),
   });
 });
-
-// app.setAsDefaultProtocolClient('http');
-// app.setAsDefaultProtocolClient('https');
 
 const gotTheLock = app.requestSingleInstanceLock();
 

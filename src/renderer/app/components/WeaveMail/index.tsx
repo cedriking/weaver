@@ -8,6 +8,9 @@ import { icons } from '~/renderer/app/constants';
 import { Input } from '~/renderer/app/components/SearchBox/style';
 import { StyledLabel } from '~/renderer/components/Button/styles';
 import Ripple from '~/renderer/components/Ripple';
+import {Buttons, DropArrow} from "~/renderer/app/components/Settings/style";
+import {ContextMenu, ContextMenuItem} from "~/renderer/app/components/ContextMenu";
+import {WalletItem} from "~/renderer/app/models";
 
 interface Props {
   background?: string;
@@ -73,15 +76,55 @@ export const Button = ({
   </StyledButton>
 );
 
+const toggleComposeAddresses = (e: any) => {
+  e.stopPropagation();
+
+  store.weaveMailStore.composeCtx = !store.weaveMailStore.composeCtx;
+};
+
+export const setFrom = (e: any, wallet: WalletItem) => {
+  e.preventDefault();
+
+  store.weaveMailStore.compose.sender = wallet.title;
+  store.weaveMailStore.compose.from = store.wallets.decrypt(store.wallets.items.find(item => wallet.title === item.title));
+
+  store.weaveMailStore.composeCtx = false;
+};
+
+export const ComposeFrom = observer(() => {
+  if (store.weaveMailStore.compose.sender === '' && store.wallets.defaultWallet !== null) {
+    store.weaveMailStore.compose.sender = store.wallets.defaultWallet.title;
+    store.weaveMailStore.compose.from = store.wallets.decrypt(store.wallets.defaultWallet);
+  }
+
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title onClick={toggleComposeAddresses}>Sender: <strong>{store.weaveMailStore.compose.sender}</strong></Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <DropArrow onClick={toggleComposeAddresses} />
+          <ContextMenu visible={store.weaveMailStore.composeCtx} style={{ marginLeft: '-320px', width: 'auto' }}>
+            {store.wallets.items.map((item, i) => {
+              return (<ContextMenuItem key={i} onClick={e => setFrom(e, item)}>{item.title}</ContextMenuItem>);
+            })}
+          </ContextMenu>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
 export const ShowCompose = observer((props) => {
   console.log(props);
 
   return (
     <>
+      <ComposeFrom />
+
       <SettingsSection>
         <ListItem>
           <Title htmlFor="compose-to">Recipient:</Title>
-          <Input id="compose-to" value={store.weaveMailStore.compose.to} onChange={(e) => store.weaveMailStore.compose.to = e.target.value} placeholder="BPr7vrFduuQqqVMu_tftxsScTKUq9ke0rx4q5C9ieQU" />
+          <Input id="compose-to" value={store.weaveMailStore.compose.to} onChange={(e) => store.weaveMailStore.compose.to = e.target.value} />
         </ListItem>
       </SettingsSection>
 
@@ -95,20 +138,20 @@ export const ShowCompose = observer((props) => {
       <SettingsSection style={{ overflow: '-webkit-paged-x' }}>
         <ListItem style={{ display: 'block' }}>
           <Title htmlFor="compose-msg" style={{ margin: '15px 0', display: 'block' }}>Message:</Title>
-          <TextArea id="compose-msg" style={{ height: '100px' }} onInput={onInput}>{store.weaveMailStore.compose.message}</TextArea>
+          <TextArea id="compose-msg" style={{ height: '100px' }} onChange={(e) => store.weaveMailStore.compose.message = e.target.value} onInput={onInput} value={store.weaveMailStore.compose.message} />
         </ListItem>
       </SettingsSection>
 
       <SettingsSection>
         <ListItem>
           <Title htmlFor="compose-balance">Send Balance:</Title>
-          <Input id="compose-balance" value={store.weaveMailStore.compose.balance} onChange={(e) => store.weaveMailStore.compose.balance = +e.target.value} />
+          <Input type="number" id="compose-balance" value={store.weaveMailStore.compose.balance} onChange={(e) => store.weaveMailStore.compose.balance = e.target.value} />
         </ListItem>
       </SettingsSection>
 
       <ListItem style={{ marginBottom: '50px' }}>
-        <Button background="black" onClick={(e) => console.log(e)}>Send Message</Button>
-        <Button background="black" onClick={(e) => console.log(e)}>Cancel</Button>
+        <Button background="black" onClick={(e) => store.weaveMailStore.sendMessage()}>Send Message</Button>
+        <Button background="black" onClick={(e) => store.weaveMailStore.clearCompose()}>Cancel</Button>
       </ListItem>
     </>
   );

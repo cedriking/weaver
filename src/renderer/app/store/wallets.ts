@@ -136,7 +136,7 @@ export class WalletsStore {
     fs.writeFileSync(item.filepath, crypto.AES.encrypt(data, this.walletPassword).toString(), { encoding: 'utf8' });
   }
 
-  public decrypt(item: WalletItem): WalletItem {
+  public decrypt(item: WalletItem): JWKInterface {
     const fileData: string = fs.readFileSync(item.filepath, { encoding: 'utf8' });
     const decrypted = crypto.AES.decrypt(fileData, this.walletPassword);
 
