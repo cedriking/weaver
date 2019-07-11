@@ -1,4 +1,9 @@
-import * as Arweave from 'arweave/node';
+import Arweave from 'arweave/web';
+import { settingsFile } from '~/renderer/app/store/settings';
+
+// const port = settingsFile.get('serverPort') || 1984;
+// export const arweaveNetwork = Arweave.init({ host: '127.0.0.1', port });
+
 export const arweaveNetwork = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 
 export const USER_AGENT =
