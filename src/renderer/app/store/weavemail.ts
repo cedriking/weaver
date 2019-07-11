@@ -60,8 +60,6 @@ export class WeaveMailStore {
     };
 
     const res = await arweaveNetwork.api.post('arql', mailQuery);
-
-    console.log(res);
   }
 
   @action
@@ -180,6 +178,8 @@ export class WeaveMailStore {
         let mail = arweaveNetwork.utils.bufferToString(await this.decryptMail(arweaveNetwork.utils.b64UrlToBuffer(tx.data), key));
         mail = mail.replace(/(?:\r\n|\r|\n)/g, '<br>');
         mail = mail.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+        console.log(mail);
 
         let mailContent;
         try {
