@@ -3,6 +3,7 @@ import { centerIcon } from '~/shared/mixins';
 import { icons } from '~/renderer/app/constants';
 import { Theme } from '~/renderer/app/models/theme';
 import { transparency } from '~/renderer/constants';
+import { Section } from '~/renderer/app/components/Overlay/style';
 
 interface StyledButtonProps {
   background: string;
@@ -18,9 +19,45 @@ export const Sections = styled.div`
   align-items: center;
 `;
 
+export const Item = styled(Section)`
+  margin-top: 56px;
+  padding: 0px 0px 8px 0px;
+
+  &:first-child {
+    margin-top: 48px;
+  }
+`;
+
 export const Title = styled.label`
   font-weight: 100;
   font-size: 15px;
+`;
+export const SubTitle = styled.div`
+  font-weight: 100;
+  font-size: 13px;
+`;
+
+export const TitleItem = styled.div`
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 16px;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+export const From = styled.div`
+  flex: 2;
+  opacity: 0.54;
+`;
+
+export const Balance = styled.div`
+  flex: 0;
+  opacity: 0.54;
 `;
 
 export const Buttons = styled.div`

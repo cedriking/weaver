@@ -1,7 +1,18 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import store from '../../store';
-import { Sections, SettingsSection, Title, ListItem, TextArea, StyledButton } from './style';
+import {
+  Sections,
+  SettingsSection,
+  Title,
+  ListItem,
+  TextArea,
+  StyledButton,
+  TitleItem,
+  From,
+  Balance,
+  SubTitle,
+} from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { icons } from '~/renderer/app/constants';
@@ -12,7 +23,6 @@ import { Buttons, DropArrow } from '~/renderer/app/components/Settings/style';
 import { ContextMenu, ContextMenuItem } from '~/renderer/app/components/ContextMenu';
 import { WeaveMailItem } from '~/renderer/app/store/weavemail';
 import { Item, Label } from '~/renderer/app/components/AppsSection/style';
-import { Site, Time } from '~/renderer/app/components/WalletItem/style';
 import { WalletItem } from '~/renderer/app/models';
 
 interface Props {
@@ -158,16 +168,19 @@ export const ShowCompose = observer((props) => {
   );
 });
 
-const mailItemClick = (d: any) => {
-  console.log(d);
+const mailItemClick = (e: React.MouseEvent, d: WeaveMailItem) => {
+  e.preventDefault();
+
+  store.weaveMailStore.currentItem = d;
+  store.weaveMailStore.current = 'single';
 };
 
 const MailItem = observer(({ data }: { data: WeaveMailItem }) => {
   return (
-    <ListItem key={data.id} onClick={e => mailItemClick(data)}>
-      <Title>{data.subject}</Title>
-      <Site>{data.from}</Site>
-      <Time>{data.tdQty}</Time>
+    <ListItem key={data.id} onClick={e => mailItemClick(e, data)}>
+      <TitleItem>{data.subject}</TitleItem>
+      <From>{data.from}</From>
+      <Balance>{data.tdQty}</Balance>
     </ListItem>
   );
 });
@@ -183,22 +196,79 @@ const MailSection = observer(({ data }: { data: { label?: string; items?: WeaveM
   );
 });
 
-const ShowInbox = observer((props) => {
+const ShowInbox = observer(() => {
   if (!store.weaveMailStore.wallets.length) {
     store.weaveMailStore.wallets = store.wallets.items;
     store.weaveMailStore.walletsData = store.wallets.items.map(wallet => store.wallets.decrypt(wallet));
   }
 
-  console.log(props);
-
   return (
     <Sections>
       <Content>
-        {store.weaveMailStore.sections.map(data => (
+        {store.weaveMailStore.list.map(data => (
           <MailSection data={data} key={data.label} />
         ))}
       </Content>
     </Sections>
+  );
+});
+
+const closeReply = (e: React.MouseEvent) => {
+  e.preventDefault();
+
+  store.weaveMailStore.clearCompose();
+  store.weaveMailStore.currentItem = null;
+  store.weaveMailStore.current = 'inbox';
+};
+
+const ShowSingle = observer(() => {
+  store.weaveMailStore.compose.from = store.wallets.decrypt(store.weaveMailStore.wallets.find(wallet => wallet.title === store.weaveMailStore.currentItem.to));
+
+  return (
+    <>
+      <SettingsSection>
+        <ListItem>
+          <Title>Title: <strong>{store.weaveMailStore.currentItem.subject}</strong></Title>
+        </ListItem>
+        <ListItem>
+          <Title>Date: </Title>
+          <SubTitle>{store.weaveMailStore.currentItem.date}</SubTitle>
+        </ListItem>
+        <ListItem>
+          <Title>From: </Title>
+          <SubTitle>{store.weaveMailStore.currentItem.from}</SubTitle>
+        </ListItem>
+        <ListItem>
+          <Title>Balance: </Title>
+          <SubTitle>{store.weaveMailStore.currentItem.tdQty}</SubTitle>
+        </ListItem>
+      </SettingsSection>
+
+      <SettingsSection>
+        <ListItem>
+          {store.weaveMailStore.currentItem.message}
+        </ListItem>
+      </SettingsSection>
+
+      <SettingsSection style={{ overflow: '-webkit-paged-x' }}>
+        <ListItem style={{ display: 'block' }}>
+          <Title htmlFor="compose-msg" style={{ margin: '15px 0', display: 'block' }}>Reply:</Title>
+          <TextArea id="compose-msg" style={{ height: '100px' }} onChange={(e) => store.weaveMailStore.compose.message = e.target.value} onInput={onInput} value={store.weaveMailStore.compose.message} />
+        </ListItem>
+      </SettingsSection>
+
+      <SettingsSection>
+        <ListItem>
+          <Title htmlFor="compose-balance">Send Balance:</Title>
+          <Input type="number" id="compose-balance" value={store.weaveMailStore.compose.balance} onChange={(e) => store.weaveMailStore.compose.balance = e.target.value} />
+        </ListItem>
+      </SettingsSection>
+
+      <ListItem style={{ marginBottom: '50px' }}>
+        <Button background="black" onClick={(e) => store.weaveMailStore.sendMessage()}>Send Message</Button>
+        <Button background="black" onClick={closeReply}>Close</Button>
+      </ListItem>
+    </>
   );
 });
 
@@ -243,9 +313,10 @@ export const WeaveMail = observer(() => {
         <Sections>
           <Content>
             {store.weaveMailStore.current === 'compose' && <ShowCompose />}
-            {store.weaveMailStore.current === 'inbox' && <ShowInbox show="all" />}
+            {store.weaveMailStore.current === 'single' && <ShowSingle />}
           </Content>
         </Sections>
+        {store.weaveMailStore.current === 'inbox' && <ShowInbox />}
       </Scrollable>
     </Container>
   );

@@ -1,7 +1,7 @@
 import * as Datastore from 'nedb';
 import { getPath } from '~/shared/utils/paths';
 import { arweaveNetwork } from '~/shared/constants';
-import { observable, action, computed } from 'mobx';
+import { action, observable } from 'mobx';
 import { JWKInterface } from 'arweave/node/lib/wallet';
 import * as notifier from 'node-notifier';
 import { WalletItem } from '~/renderer/app/models';
@@ -10,12 +10,14 @@ export interface WeaveMailItem {
   id: string;
   txStatus: string;
   from: string;
+  to?: string;
   subject: string;
   message: string;
   date: string;
   unixTime: number;
   tdFee: string;
   tdQty: string;
+  viewed?: boolean;
 }
 
 interface WeaveMailSection {
@@ -42,28 +44,30 @@ export class WeaveMailStore {
   public composeCtx = false;
 
   @observable
+  public currentItem: WeaveMailItem = null;
+
+  @observable
+  public list: WeaveMailSection[] = [];
+
+  @observable
   public compose: { sender: string, from: JWKInterface, to: string, subject: string, message: string, balance: string } = { sender: '', from: null, to: '', subject: '', message: '', balance: '0' };
 
-  public async getEmails(walletAddr: string) {
-    const mailQuery = {
-      op: 'and',
-      expr1: {
-        op: 'equals',
-        expr1: 'to',
-        expr2: walletAddr,
-      },
-      expr2: {
-        op: 'equals',
-        expr1: 'App-Name',
-        expr2: 'permamail',
-      },
-    };
+  constructor() {
+    this.refresh().catch(console.log);
 
-    const res = await arweaveNetwork.api.post('arql', mailQuery);
+    setInterval(() => {
+      this.refresh().catch(console.log);
+    }, 10000);
   }
 
   @action
   public async sendMessage() {
+    if (this.current === 'single' && this.currentItem !== null) {
+      this.compose.to = this.currentItem.from;
+      this.compose.subject = `RE: ${this.currentItem.subject}`;
+      this.compose.sender = this.currentItem.to;
+    }
+
     const time = Math.round((new Date()).getTime() / 1000);
 
     const balance = (isNaN(+this.compose.balance) ? '0' : arweaveNetwork.ar.arToWinston(this.compose.balance));
@@ -83,10 +87,7 @@ export class WeaveMailStore {
       return;
     }
 
-    console.log(this.compose.sender, this.compose.from, this.compose.to, this.compose.subject, this.compose.message, this.compose.balance);
-
     const content = await this.encryptMail(this.compose.message, this.compose.subject, pubKey);
-    console.log(content);
 
     const tx = await arweaveNetwork.createTransaction({
       target: this.compose.to,
@@ -99,7 +100,6 @@ export class WeaveMailStore {
     tx.addTag('Unix-Time', time.toString());
 
     await arweaveNetwork.transactions.sign(tx, this.compose.from);
-    console.log(tx.id);
     await arweaveNetwork.transactions.post(tx);
 
     notifier.notify({
@@ -123,13 +123,8 @@ export class WeaveMailStore {
     this.compose.balance = '0';
   }
 
-  @computed
-  public get sections() {
-    const list: WeaveMailSection[] = [];
-    let section: WeaveMailSection = {};
-
-    // @ts-ignore
-    this.wallets.forEach(async (wallet, i) => {
+  public async refresh() {
+    this.list = await Promise.all(this.wallets.map(async (wallet, i) => {
       const key = await this.walletToKey(this.walletsData[i]);
 
       const query = {
@@ -147,12 +142,15 @@ export class WeaveMailStore {
       };
 
       const res = await arweaveNetwork.api.post('arql', query);
-      let txRows: WeaveMailItem[] = [];
       if (res.data === '') {
-        return txRows;
+        const items: WeaveMailItem[] = [];
+        return {
+          label: wallet.title,
+          items,
+        };
       }
 
-      txRows = await Promise.all(res.data.map(async (id: string) => {
+      const txRows: WeaveMailItem[] = await Promise.all(res.data.map(async (id: string) => {
         const txRow: any = {};
         const tx = await arweaveNetwork.transactions.get(id);
         txRow.unixTime = 0;
@@ -174,6 +172,7 @@ export class WeaveMailStore {
         txRow.from = await arweaveNetwork.wallets.ownerToAddress(tx.owner);
         txRow.tdFee = arweaveNetwork.ar.winstonToAr(tx.reward);
         txRow.tdQty = arweaveNetwork.ar.winstonToAr(tx.quantity);
+        txRow.to = tx.target;
 
         let mail = arweaveNetwork.utils.bufferToString(await this.decryptMail(arweaveNetwork.utils.b64UrlToBuffer(tx.data), key));
         mail = mail.replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -199,15 +198,13 @@ export class WeaveMailStore {
 
       txRows.sort((a, b) => b.unixTime - a.unixTime);
 
-      section = {
+      return {
         label: wallet.title,
         items: txRows,
       };
+    }));
 
-      list.push(section);
-    });
-
-    return list;
+    return this.list;
   }
 
   private async encryptMail(content: string, subject: string, pubKey: CryptoKey) {
