@@ -86,7 +86,7 @@
     "mouse-hooks": "0.4.1",
     "nedb": "1.8.0",
     "node-vibrant": "3.2.0-alpha",
-    "pretty-bytes": "5.2.0",
+    "pretty-bytes": "5.3.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "restify": "^8.3.3",
