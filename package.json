@@ -51,7 +51,7 @@
     "@types/react-dom": "16.8.5",
     "@types/restify": "7.2.12",
     "@types/styled-components": "4.1.18",
-    "concurrently": "4.1.1",
+    "concurrently": "4.1.2",
     "cross-env": "5.2.0",
     "electron": "5.0.7",
     "electron-builder": "21.1.1",
