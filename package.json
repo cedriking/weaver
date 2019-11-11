@@ -58,7 +58,7 @@
     "fuse-box": "3.7.1",
     "prettier": "1.18.2",
     "terser": "4.1.2",
-    "tslint": "5.18.0",
+    "tslint": "5.20.1",
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.5.3",
