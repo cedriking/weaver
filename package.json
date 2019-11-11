@@ -43,7 +43,7 @@
     "@types/chrome": "0.0.86",
     "@types/crypto-js": "3.1.43",
     "@types/gsap": "1.20.2",
-    "@types/leveldown": "4.0.0",
+    "@types/leveldown": "4.0.2",
     "@types/levelup": "3.1.1",
     "@types/nedb": "1.8.8",
     "@types/node": "12.6.8",
