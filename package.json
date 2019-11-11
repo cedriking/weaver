@@ -73,7 +73,7 @@
     "crypto-js": "^3.1.9-1",
     "edit-json-file": "^1.2.1",
     "electron-extensions": "2.0.0",
-    "electron-log": "3.0.6",
+    "electron-log": "3.0.9",
     "electron-updater": "4.1.2",
     "file-type": "12.0.1",
     "gsap": "2.1.3",
