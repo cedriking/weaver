@@ -53,7 +53,7 @@
     "@types/styled-components": "4.1.18",
     "concurrently": "4.1.1",
     "cross-env": "5.2.0",
-    "electron": "5.0.7",
+    "electron": "5.0.12",
     "electron-builder": "21.1.1",
     "fuse-box": "3.7.1",
     "prettier": "1.18.2",
