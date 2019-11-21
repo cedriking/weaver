@@ -49,7 +49,7 @@
     "@types/node": "12.6.8",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.5",
-    "@types/restify": "7.2.12",
+    "@types/restify": "8.4.2",
     "@types/styled-components": "4.1.18",
     "concurrently": "4.1.1",
     "cross-env": "5.2.0",
